@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/inventory")
@@ -25,19 +26,8 @@ public class InventoryController {
         globalInventoryItem = inventoryItem;
         return inventoryItem;
     }
-   /** @PostMapping("receive")
-    public Inventory receiveStock(int productId, List<Product> quantityReceived) {
-        Inventory inventoryProduct = new Inventory();
-        // Simulating receipt of stock
-        inventoryProduct.setId(productId);
-        inventoryProduct.setProducts(quantityReceived);
-        inventoryProduct.setCreatedDate(new Date());
-        inventoryProduct.setUpdatedDate(new Date());
-        inventoryProduct.setLocation("Oman");
-        inventoryProduct.setManager("New stock received");
-        globalInventoryItem = inventoryProduct;
-        return inventoryProduct;
-    }
+   /**
+
     @PostMapping("write-off")
     public Inventory writeOffInventory(@RequestParam int productId, @RequestParam int quantityToWriteOff) {
         Inventory inventoryItem = new Inventory();
@@ -66,9 +56,45 @@ public class InventoryController {
 
     // reporting all Inventory
     @GetMapping("report")
-    public Inventory reportInventory() {
+    public String reportInventory() {
 
-        return globalInventoryItem;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("********** Report *************\n");
+     //   stringBuilder.append("Products: "+globalInventoryItem.getProducts()+"\n");
+        // Sort products by name
+        List<Product> sortedProducts = globalInventoryItem.getProducts().stream().collect(Collectors.toList());
+
+        // Parse and display sorted product information
+        String productsInfo = parseProductsInfo(sortedProducts);
+        stringBuilder.append("Sorted Products:\n").append(productsInfo);
+        stringBuilder.append("Location: " + globalInventoryItem.getLocation()+"\n");
+        stringBuilder.append("Manager: "+globalInventoryItem.getManager()+"\n");
+        stringBuilder.append("Supplier: "+globalInventoryItem.getSupplier()+"\n");
+        stringBuilder.append("PhonNumber :"+globalInventoryItem.getPhoneNumber()+"\n");
+        stringBuilder.append("OpeningHours: "+globalInventoryItem.getOpeningHours()+"\n");
+        stringBuilder.append("ClosingHours: "+globalInventoryItem.getClosingHours()+"\n");
+
+
+        return stringBuilder.toString();
+    }
+
+    private String parseProductsInfo(List<Product> products) {
+        StringBuilder productsInfo = new StringBuilder();
+        for (Product product : products) {
+            productsInfo.append("Name: ").append(product.getProductDetails().getName()+"\n");
+            productsInfo.append("Country of Origin: ").append(product.getProductDetails().getCountryOfOrigin()+"\n");
+            productsInfo.append("Description : ").append(product.getProductDetails().getDescription()+"\n");
+            productsInfo.append("Quantity  : ").append(product.getQuantity()+"\n");
+            productsInfo.append("category : ").append(product.getCategory()+"\n");
+            productsInfo.append("Color  : ").append(product.getProductDetails().getColor()+"\n");
+            productsInfo.append("Size : ").append(product.getProductDetails().getSize()+"\n");
+            productsInfo.append("sku  : ").append(product.getSku()+"\n");
+            productsInfo.append(" price : ").append(product.getProductDetails().getPrice()+"\n");
+
+            // Add other product attributes as needed
+            productsInfo.append("\n");
+        }
+        return productsInfo.toString();
     }
 
 
