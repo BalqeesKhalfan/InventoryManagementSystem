@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Controllers;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
+import com.TRA.tra24Springboot.Services.InventoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +17,18 @@ import java.util.stream.Collectors;
 public class InventoryController {
     @Autowired
     InventoryRepository inventoryRepository;
+    @Autowired
+    InventoryServices inventoryServices;
 
     private Inventory globalInventoryItem = new Inventory();
     @PostMapping("receive")
     public Inventory receiveStock(@RequestBody Inventory inventoryItem) {
-        inventoryItem.setId(1);
-        inventoryItem.setCreatedDate(new Date());
-        inventoryItem.setIsActive(Boolean.TRUE);
-        inventoryItem.setOpeningHours("8am");
-        inventoryItem.setClosingHours("6pm");
 
-        globalInventoryItem = inventoryItem;
-        return inventoryRepository.save(inventoryItem);
+        return inventoryServices.receiveStock(inventoryItem);
     }
     @PostMapping("write-off")
-    public Inventory writeOffInventory(@RequestBody Inventory inventoryItem) {
-        inventoryItem.setIsActive(Boolean.FALSE);
-        inventoryItem.setUpdatedDate(new Date());
-        //inventoryItem.setWriteOffDate(new Date());
-        globalInventoryItem = inventoryItem;
-        return inventoryRepository.save(inventoryItem);
+    public Inventory writeOffInventory(@RequestParam Integer inventoryId) {
+        return inventoryServices.writeOffInventory(inventoryId);
     }
 
 
