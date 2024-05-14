@@ -2,6 +2,10 @@ package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
+import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
+import com.TRA.tra24Springboot.Repositories.ProductRepository;
+import com.TRA.tra24Springboot.Services.ProductServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,36 +16,36 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+   @Autowired
+    ProductRepository productRepository;
+   @Autowired
+    ProductDetailsRepository productDetailsRepository;
 
-    Product globalProduct = new Product();
+     @Autowired
+    ProductServices productServices;
 
     @PostMapping("add")
-    public Product addProduct(){
+    public Product addProduct(@RequestBody Product product){
 
-        Product product = new Product();
-
-        ProductDetails productDetails = new ProductDetails();
-        productDetails.setId(1);
-        productDetails.setName("Apple");
-        productDetails.setColor("Green");
-        productDetails.setSize("Small");
-        productDetails.setPrice(10d);
-        productDetails.setCountryOfOrigin("USA");
-        productDetails.setDescription("Apple Product");
-
-        product.setProductDetails(productDetails);
-        product.setSku(UUID.randomUUID());
-        product.setCategory("Electronics");
-        product.setQuantity(1);
-        product.setId(1);
-        product.setIsActive(Boolean.TRUE);
-        product.setCreatedDate(new Date());
-
-        globalProduct = product;
-
-        return product;
+        return productServices.addProduct(product);
+    }
+    @PostMapping("delete")
+    public String deleteProduct(@RequestParam String productName ){
+       productServices.deleteProduct(productName);
+       return "Success";
+    }
+    @PostMapping("deleteId")
+    public String deleteProductById(@RequestParam Integer productId ){
+        productServices.deleteProductById(productId);
+        return "Success";
     }
 
+
+    @PutMapping("update")
+    public String updateProduct(@RequestParam Integer id, @RequestParam Integer quantity) {
+        return productServices.updateProductQuantity(id, quantity);
+    }
+  /**
     @PostMapping("delete/{id}")
     public String deleteProduct(@PathVariable Integer id){
 
@@ -64,10 +68,10 @@ public class ProductController {
         userProduct.setUpdatedDate(new Date());
 
         globalProduct = userProduct;
-        return globalProduct;
+        return productRepository.save(globalProduct);
     }
     @GetMapping("get")
     public  Product reportProduct(){
-        return  globalProduct;
-    }
+        return  productRepository.save(globalProduct);
+    }**/
 }

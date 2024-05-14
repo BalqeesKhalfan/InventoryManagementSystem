@@ -3,6 +3,8 @@ package com.TRA.tra24Springboot.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.Date;
 import java.util.UUID;
@@ -17,6 +19,7 @@ public class Product extends BaseEntity {
     UUID sku;
 
     @OneToOne
+    @Cascade(CascadeType.ALL)
     ProductDetails productDetails;
 
 
