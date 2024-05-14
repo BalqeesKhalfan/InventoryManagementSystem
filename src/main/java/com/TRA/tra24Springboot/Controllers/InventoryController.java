@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Controllers;
 
+import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
@@ -73,6 +74,11 @@ public class InventoryController {
             productsInfo.append("\n");
         }
         return productsInfo.toString();
+    }
+
+    @GetMapping("getAll")
+    public List<InventoryDTO> getInventories(){
+        return inventoryServices.getAll();
     }
 
 
