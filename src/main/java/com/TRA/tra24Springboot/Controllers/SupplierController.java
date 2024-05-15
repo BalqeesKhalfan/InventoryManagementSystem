@@ -1,9 +1,12 @@
 package com.TRA.tra24Springboot.Controllers;
 
+import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Services.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/supplier")
@@ -18,7 +21,7 @@ public class SupplierController {
         return supplierServices.addSupplier(supplier);
     }
     @PutMapping("update")
-    public String updateSupplier(@RequestParam Integer id, @RequestParam String quantity) {
+    public String updateSupplier(@RequestParam Integer id, @RequestParam Integer quantity) {
         return supplierServices.updateMinimumOrderQuantity(id,quantity);
     }
     @PostMapping("delete")
@@ -54,6 +57,12 @@ public class SupplierController {
         }
         return "Success!";
     }**/
+
+   //method to get suppliers
+   @GetMapping("get")
+   public List<SupplierDTO> getAll(){
+       return supplierServices.getSuppliers();
+   }
 
 
 }

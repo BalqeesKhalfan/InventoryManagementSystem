@@ -29,7 +29,7 @@ public class Supplier extends BaseEntity{
     String complaints;
     String paymentMethods; //TODO: Enum for payment methods
     String shippingMethods;
-    String minimumOrderQuantity;
+    Integer minimumOrderQuantity;
 
     @OneToMany
     List<Order> orders;
