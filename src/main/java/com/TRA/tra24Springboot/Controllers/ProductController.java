@@ -1,5 +1,8 @@
 package com.TRA.tra24Springboot.Controllers;
 
+import com.TRA.tra24Springboot.DTO.ContactDetailsDTO;
+import com.TRA.tra24Springboot.DTO.ProductDTO;
+import com.TRA.tra24Springboot.Models.ContactDetails;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
 import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
@@ -16,10 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-   @Autowired
-    ProductRepository productRepository;
-   @Autowired
-    ProductDetailsRepository productDetailsRepository;
+
 
      @Autowired
     ProductServices productServices;
@@ -45,33 +45,12 @@ public class ProductController {
     public String updateProduct(@RequestParam Integer id, @RequestParam Integer quantity) {
         return productServices.updateProductQuantity(id, quantity);
     }
-  /**
-    @PostMapping("delete/{id}")
-    public String deleteProduct(@PathVariable Integer id){
 
-            if(globalProduct.getId().equals(id)){
-                globalProduct.setIsActive(Boolean.FALSE);
-                System.out.println(globalProduct.toString());
-
-        }
-        return "Success!";
-    }
-
-    @PutMapping("update")
-    public Product updateProduct(@RequestBody Product userProduct){
-
-
-        ProductDetails pd = userProduct.getProductDetails();
-        pd.setUpdatedDate(new Date());
-
-        userProduct.setProductDetails(pd);
-        userProduct.setUpdatedDate(new Date());
-
-        globalProduct = userProduct;
-        return productRepository.save(globalProduct);
-    }
     @GetMapping("get")
-    public  Product reportProduct(){
-        return  productRepository.save(globalProduct);
-    }**/
+    public List<ProductDTO> getProduct(){
+
+        return productServices.getProduct();
+    }
+
+
 }
