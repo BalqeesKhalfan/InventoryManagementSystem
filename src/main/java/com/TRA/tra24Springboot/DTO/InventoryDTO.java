@@ -8,13 +8,17 @@ import java.util.List;
 
 @Data
 public class InventoryDTO {
-    Integer inventoryId;
+   /** Integer inventoryId;
     String inventoryManager;
     String inventoryLocation;
     String inventoryPhoneNo;
-    String inventorySupplier;
+    String inventorySupplier;**/
+   Integer inventoryId;
+    List<ProductDTO>products;
+  //  List<SupplierDTO> suppliers;
+    String location;
 
-    public static  InventoryDTO convertToDTO(Inventory inventory){
+   /** public static  InventoryDTO convertToDTO(Inventory inventory){
         InventoryDTO inventoryDTO = new InventoryDTO();
         inventoryDTO.setInventoryId(inventory.getId());
         inventoryDTO.setInventoryManager(inventory.getManager());
@@ -31,5 +35,27 @@ public class InventoryDTO {
 
         }
         return inventoryDTOS;
+    }**/
+
+
+   public static InventoryDTO convertToDTO(Inventory inventory) {
+       InventoryDTO inventoryDTO = new InventoryDTO();
+       inventoryDTO.setInventoryId(inventory.getId());
+       inventoryDTO.setLocation(inventory.getLocation());
+       inventoryDTO.setProducts(ProductDTO.convertToDTO(inventory.getProducts()));
+
+
+       return inventoryDTO;
+   }
+
+    public static List<InventoryDTO> convertToDTO(List<Inventory> inventoryListList) {
+        List<InventoryDTO> orderDTO = new ArrayList<>();
+
+        for (Inventory inventoryDetailsDB : inventoryListList) {
+            InventoryDTO dto = convertToDTO(inventoryDetailsDB);
+            orderDTO.add(dto);
+        }
+
+        return orderDTO;
     }
 }
