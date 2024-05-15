@@ -1,5 +1,7 @@
 package com.TRA.tra24Springboot.Controllers;
 
+import com.TRA.tra24Springboot.DTO.OrderDTO;
+import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Models.Order;
 import com.TRA.tra24Springboot.Models.OrderStatus;
 import com.TRA.tra24Springboot.Models.PaymentStatus;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -57,5 +60,11 @@ public class OrderController {
             return "Unable to cancel order. Order may not exist or may not be cancelable.";
         }
     }**/
+
+   @GetMapping("getOrder")
+   public List<OrderDTO> getOrder(){
+
+       return orderServices.getOrder();
+   }
 
 }

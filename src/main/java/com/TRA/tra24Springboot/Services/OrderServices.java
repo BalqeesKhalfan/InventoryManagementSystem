@@ -1,5 +1,7 @@
 package com.TRA.tra24Springboot.Services;
 
+
+import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderServices {
@@ -29,6 +32,7 @@ public class OrderServices {
         order.setCategoryName("Electronics");
         order.setCreatedDate(new Date());
         order.setOrderDate(new Date());
+        //order.setIsActive(Boolean.TRUE);
         return orderRepository.save(order);
     }
 
@@ -55,5 +59,12 @@ public class OrderServices {
             return "Unable to cancel order. Order may not exist or may not be cancelable.";
         }
     }
+
+    public List<OrderDTO> getOrder(){
+        List <Order> orders = orderRepository.findAll();
+
+        return OrderDTO.convertToDTO(orders);
+    }
+
 
 }

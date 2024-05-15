@@ -20,7 +20,6 @@ public class InventoryController {
     @Autowired
     InventoryServices inventoryServices;
 
-    
     @PostMapping("receive")
     public Inventory receiveStock(@RequestBody Inventory inventoryItem) {
 
