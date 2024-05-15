@@ -23,7 +23,7 @@ public class ReportingController {
     @Autowired
     private SupplierController supplier;
 
-    @GetMapping("/inventory")
+    /** @GetMapping("/inventory")
     public String generateInventoryReport() {
         // Call service method to fetch all products in inventory
         return inventory.reportInventory();

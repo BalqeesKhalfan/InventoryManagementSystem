@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-    @Autowired
-    InventoryRepository inventoryRepository;
+
     @Autowired
     InventoryServices inventoryServices;
 
-    private Inventory globalInventoryItem = new Inventory();
+    
     @PostMapping("receive")
     public Inventory receiveStock(@RequestBody Inventory inventoryItem) {
 
@@ -34,7 +33,7 @@ public class InventoryController {
 
 
     // reporting all Inventory
-    @GetMapping("report")
+   /** @GetMapping("report")
     public String reportInventory() {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -74,7 +73,7 @@ public class InventoryController {
             productsInfo.append("\n");
         }
         return productsInfo.toString();
-    }
+    }**/
 
     @GetMapping("getAll")
     public List<InventoryDTO> getInventories(){
