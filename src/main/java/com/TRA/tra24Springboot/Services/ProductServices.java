@@ -81,4 +81,7 @@ public class ProductServices {
     public List<Product> getProductsByPrice(Double price) {
         return productRepository.findByProductPrice(price);
     }
+    public List<Product>getProductByCountry(String country) {
+        return productRepository.findByProductByCountry(country);
+    }
 }

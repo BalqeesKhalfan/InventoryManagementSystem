@@ -68,5 +68,9 @@ public class ProductController {
     public List<Product> getProductsByPrice(@RequestParam Double price) {
         return productServices.getProductsByPrice(price);
     }
+    @GetMapping("getByCountry")
+    public List<Product> getProductByCountry(@RequestParam String country) {
+        return productServices.getProductByCountry(country);
+    }
 
 }
