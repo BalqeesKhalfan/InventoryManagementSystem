@@ -84,4 +84,7 @@ public class ProductServices {
     public List<Product>getProductByCountry(String country) {
         return productRepository.findByProductByCountry(country);
     }
+    public List<Product>getProductBySize(String size) {
+        return productRepository.findByProductBySize(size);
+    }
 }

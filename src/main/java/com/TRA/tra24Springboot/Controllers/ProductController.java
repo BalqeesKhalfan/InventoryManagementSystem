@@ -72,5 +72,9 @@ public class ProductController {
     public List<Product> getProductByCountry(@RequestParam String country) {
         return productServices.getProductByCountry(country);
     }
+    @GetMapping("getBySize")
+    public List<Product> getProductBySize(@RequestParam String size) {
+        return productServices.getProductBySize(size);
+    }
 
 }
