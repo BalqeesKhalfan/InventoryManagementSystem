@@ -64,5 +64,9 @@ public class ProductController {
     public List<Product> getProductsByColor(@RequestParam String color) {
         return productServices.getProductsByColor(color);
     }
+    @GetMapping("getByPrice")
+    public List<Product> getProductsByPrice(@RequestParam Double price) {
+        return productServices.getProductsByPrice(price);
+    }
 
 }
