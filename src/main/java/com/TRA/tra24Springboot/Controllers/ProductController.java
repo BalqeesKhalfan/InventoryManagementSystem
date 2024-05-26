@@ -9,6 +9,7 @@ import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
 import com.TRA.tra24Springboot.Repositories.ProductRepository;
 import com.TRA.tra24Springboot.Services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -51,6 +52,13 @@ public class ProductController {
 
         return productServices.getProduct();
     }
-
+  /**@GetMapping("getByName")
+    public Product getProductByName(@RequestParam String productName){
+        return productServices.getProductByName(productName);
+  }**/
+  @GetMapping("getByName")
+  public List<Product> getProductsByName(@RequestParam String productName) {
+      return productServices.getProductsByName(productName);
+  }
 
 }

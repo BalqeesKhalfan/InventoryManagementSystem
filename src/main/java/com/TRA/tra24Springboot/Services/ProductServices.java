@@ -67,5 +67,11 @@ public class ProductServices {
 
         return ProductDTO.convertToDTO(products);
     }
+   /**public Product getProductByName(String productName){
+        return productRepository.getByProductName(productName);
 
+   }**/
+   public List<Product> getProductsByName(String productName) {
+       return productRepository.findByProductName(productName);
+   }
 }
