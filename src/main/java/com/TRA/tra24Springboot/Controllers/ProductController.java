@@ -52,10 +52,10 @@ public class ProductController {
 
         return productServices.getProduct();
     }
-  /**@GetMapping("getByName")
-    public Product getProductByName(@RequestParam String productName){
-        return productServices.getProductByName(productName);
-  }**/
+   @GetMapping("getById")
+    public Product getProductById(@RequestParam Integer productId){
+        return productServices.getProductById(productId);
+  }
   @GetMapping("getByName")
   public List<Product> getProductsByName(@RequestParam String productName) {
       return productServices.getProductsByName(productName);
