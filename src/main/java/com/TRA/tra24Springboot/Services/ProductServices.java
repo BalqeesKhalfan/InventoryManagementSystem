@@ -74,4 +74,7 @@ public class ProductServices {
    public List<Product> getProductsByName(String productName) {
        return productRepository.findByProductName(productName);
    }
+    public List<Product> getProductsByColor(String color) {
+        return productRepository.findByProductcolor(color);
+    }
 }
