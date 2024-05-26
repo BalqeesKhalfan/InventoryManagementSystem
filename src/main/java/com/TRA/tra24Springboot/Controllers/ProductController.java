@@ -76,5 +76,9 @@ public class ProductController {
     public List<Product> getProductBySize(@RequestParam String size) {
         return productServices.getProductBySize(size);
     }
+    @GetMapping("getByCategory")
+    public List<Product> getProductByCategory(@RequestParam String category) {
+        return productServices.getProductByCategory(category);
+    }
 
 }

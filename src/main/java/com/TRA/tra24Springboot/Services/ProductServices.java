@@ -87,4 +87,7 @@ public class ProductServices {
     public List<Product>getProductBySize(String size) {
         return productRepository.findByProductBySize(size);
     }
+    public List<Product>getProductByCategory(String category) {
+        return productRepository.findByProductByCategory(category);
+    }
 }
