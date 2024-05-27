@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
+import com.TRA.tra24Springboot.Models.Order;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Services.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,11 @@ public class SupplierController {
    public List<SupplierDTO> getAll(){
        return supplierServices.getSuppliers();
    }
+    @GetMapping("getById")
+    public Supplier getSupplierById(@RequestParam Integer supplierId){
+        return supplierServices.getSupplierById(supplierId);
+    }
+
 
 
 }
