@@ -88,5 +88,10 @@ public class SupplierController {
         return supplierServices.getSupplierByIsActive(isActive);
     }
 
+    @GetMapping("getByShippingMethods")
+    public List<Supplier> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
+        return supplierServices.findBySupplierByShippingMethods(shippingMethods);
+    }
+
 
 }

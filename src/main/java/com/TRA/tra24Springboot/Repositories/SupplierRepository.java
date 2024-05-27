@@ -26,4 +26,8 @@ public interface SupplierRepository extends JpaRepository <Supplier,Integer>{
     @Query("SELECT s FROM Supplier s WHERE s.isActive =:isActive")
     List<Supplier> findBySupplierByIsActive( @Param("isActive") Boolean isActive );
 
+
+    @Query("SELECT s FROM Supplier s WHERE s.shippingMethods =:shippingMethods")
+    List<Supplier> findBySupplierByShippingMethods( @Param("shippingMethods") String shippingMethods );
+
 }

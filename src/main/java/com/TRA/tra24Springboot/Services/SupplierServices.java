@@ -135,4 +135,7 @@ public class SupplierServices {
     public List<Supplier>getSupplierByIsActive(Boolean isActive) {
         return supplierRepository.findBySupplierByIsActive(isActive);
     }
+    public List<Supplier>findBySupplierByShippingMethods(String shippingMethods) {
+        return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
+    }
 }
