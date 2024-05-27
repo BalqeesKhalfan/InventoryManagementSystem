@@ -1,9 +1,6 @@
 package com.TRA.tra24Springboot.Repositories;
 
-import com.TRA.tra24Springboot.Models.Order;
-import com.TRA.tra24Springboot.Models.OrderStatus;
-import com.TRA.tra24Springboot.Models.PaymentStatus;
-import com.TRA.tra24Springboot.Models.Supplier;
+import com.TRA.tra24Springboot.Models.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +16,6 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Query("SELECT ord from Order ord WHERE ord.paymentStatus =:paymentStatus")
     List<Order> getOrderByPaymentStatus(@Param("paymentStatus") PaymentStatus paymentStatus );
 
+    @Query("SELECT ord from Order ord WHERE ord. paymentType =:paymentType")
+    List<Order> getOrderByPaymentType(@Param("paymentType") PaymentType paymentType );
 }
