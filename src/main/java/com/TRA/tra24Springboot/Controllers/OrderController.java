@@ -83,6 +83,10 @@ public class OrderController {
     public List<Order> getOrderByPaymentType(@RequestParam String categoryName){
         return orderServices.getOrderByCategoryName(categoryName);
     }
+    @GetMapping("getByIsActive")
+    public List<Order> getOrderByIsActive(@RequestParam Boolean isActive) {
+        return orderServices.getOrderByIsActive(isActive);
+    }
 
 
 }

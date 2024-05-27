@@ -86,4 +86,8 @@ public class OrderServices {
     public List<Order> getOrderByCategoryName(String categoryName) {
         return orderRepository.getOrderByCategoryName(categoryName);
     }
+
+    public List<Order>getOrderByIsActive(Boolean isActive) {
+        return orderRepository.findByOrderByIsActive(isActive);
+    }
 }

@@ -21,4 +21,6 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     @Query("SELECT ord from Order ord WHERE ord.categoryName =:categoryName")
     List<Order> getOrderByCategoryName(@Param("categoryName") String categoryName );
+    @Query("SELECT ord from Order ord WHERE ord.isActive =:isActive")
+    List<Order> findByOrderByIsActive( @Param("isActive") Boolean isActive );
 }
