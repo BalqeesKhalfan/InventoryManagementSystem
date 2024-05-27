@@ -65,6 +65,9 @@ public class OrderServices {
 
         return OrderDTO.convertToDTO(orders);
     }
+    public Order getOrderById(Integer orderId){
+        return orderRepository.getOrderById(orderId);
 
+    }
 
 }

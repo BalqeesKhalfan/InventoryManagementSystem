@@ -2,10 +2,7 @@ package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.DTO.ProductDTO;
-import com.TRA.tra24Springboot.Models.Order;
-import com.TRA.tra24Springboot.Models.OrderStatus;
-import com.TRA.tra24Springboot.Models.PaymentStatus;
-import com.TRA.tra24Springboot.Models.PaymentType;
+import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import com.TRA.tra24Springboot.Services.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +63,9 @@ public class OrderController {
 
        return orderServices.getOrder();
    }
+    @GetMapping("getId")
+    public Order getOrderById(@RequestParam Integer orderId){
+        return orderServices.getOrderById(orderId);
+    }
 
 }
