@@ -71,5 +71,9 @@ public class OrderController {
     public List<Order> getOrderByStatus(@RequestParam OrderStatus orderStatus){
         return orderServices.getOrderByStatus(orderStatus);
     }
+    @GetMapping("getPymentStatus")
+    public List<Order> getOrderByPaymentStatus(@RequestParam PaymentStatus paymentStatus){
+        return orderServices.getOrderByPaymentStatus(paymentStatus);
+    }
 
 }
