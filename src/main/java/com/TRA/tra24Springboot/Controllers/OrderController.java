@@ -67,5 +67,9 @@ public class OrderController {
     public Order getOrderById(@RequestParam Integer orderId){
         return orderServices.getOrderById(orderId);
     }
+    @GetMapping("getStatus")
+    public List<Order> getOrderByStatus(@RequestParam OrderStatus orderStatus){
+        return orderServices.getOrderByStatus(orderStatus);
+    }
 
 }

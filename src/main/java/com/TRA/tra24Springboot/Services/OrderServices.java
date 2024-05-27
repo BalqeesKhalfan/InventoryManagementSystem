@@ -70,4 +70,8 @@ public class OrderServices {
 
     }
 
+    public List<Order> getOrderByStatus(OrderStatus orderStatus) {
+        return orderRepository.getOrderByStatus(orderStatus);
+    }
+
 }
