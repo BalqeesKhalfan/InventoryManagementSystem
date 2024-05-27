@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.Order;
+import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Services.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,10 @@ public class SupplierController {
     @GetMapping("getByMinQuantity")
     public List<Supplier> getSupplierByMinimumOrderQuantity(@RequestParam Integer minimumOrderQuantity){
         return supplierServices.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
+    }
+    @GetMapping("getByIsActive")
+    public List<Supplier> getSupplierByIsActive(@RequestParam Boolean isActive) {
+        return supplierServices.getSupplierByIsActive(isActive);
     }
 
 

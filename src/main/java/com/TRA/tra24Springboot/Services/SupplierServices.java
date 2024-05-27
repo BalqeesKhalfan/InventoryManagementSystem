@@ -131,4 +131,8 @@ public class SupplierServices {
     public List<Supplier> getSupplierByMinimumOrderQuantity(Integer minimumOrderQuantity){
         return supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
     }
+
+    public List<Supplier>getSupplierByIsActive(Boolean isActive) {
+        return supplierRepository.findBySupplierByIsActive(isActive);
+    }
 }
