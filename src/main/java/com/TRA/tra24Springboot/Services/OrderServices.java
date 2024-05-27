@@ -81,4 +81,9 @@ public class OrderServices {
         return orderRepository.getOrderByPaymentType(paymentType);
     }
 
+
+
+    public List<Order> getOrderByCategoryName(String categoryName) {
+        return orderRepository.getOrderByCategoryName(categoryName);
+    }
 }

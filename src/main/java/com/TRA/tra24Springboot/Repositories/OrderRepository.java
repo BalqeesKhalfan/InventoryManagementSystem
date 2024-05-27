@@ -16,6 +16,9 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Query("SELECT ord from Order ord WHERE ord.paymentStatus =:paymentStatus")
     List<Order> getOrderByPaymentStatus(@Param("paymentStatus") PaymentStatus paymentStatus );
 
-    @Query("SELECT ord from Order ord WHERE ord. paymentType =:paymentType")
+    @Query("SELECT ord from Order ord WHERE ord.paymentType =:paymentType")
     List<Order> getOrderByPaymentType(@Param("paymentType") PaymentType paymentType );
+
+    @Query("SELECT ord from Order ord WHERE ord.categoryName =:categoryName")
+    List<Order> getOrderByCategoryName(@Param("categoryName") String categoryName );
 }

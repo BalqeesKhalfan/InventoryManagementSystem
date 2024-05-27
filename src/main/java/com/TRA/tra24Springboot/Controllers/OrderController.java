@@ -71,13 +71,18 @@ public class OrderController {
     public List<Order> getOrderByStatus(@RequestParam OrderStatus orderStatus){
         return orderServices.getOrderByStatus(orderStatus);
     }
-    @GetMapping("getByPymentStatus")
+    @GetMapping("getByPaymentStatus")
     public List<Order> getOrderByPaymentStatus(@RequestParam PaymentStatus paymentStatus){
         return orderServices.getOrderByPaymentStatus(paymentStatus);
     }
-    @GetMapping("getByPymentType")
+    @GetMapping("getByPaymentType")
     public List<Order> getOrderByPaymentType(@RequestParam PaymentType paymentType){
         return orderServices.getOrderByPaymentType(paymentType);
     }
+    @GetMapping("getByCategoryName")
+    public List<Order> getOrderByPaymentType(@RequestParam String categoryName){
+        return orderServices.getOrderByCategoryName(categoryName);
+    }
+
 
 }
