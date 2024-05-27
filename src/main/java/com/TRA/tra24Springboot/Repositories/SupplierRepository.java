@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Repositories;
 
+import com.TRA.tra24Springboot.Models.ContactDetails;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,8 @@ public interface SupplierRepository extends JpaRepository <Supplier,Integer>{
     //Query to get suppliers by country
     @Query("SELECT s FROM Supplier s WHERE s.country =:country")
     List<Supplier> getSupplierByCountry(@Param("country") String country);
+
+    @Query("SELECT s FROM Supplier s WHERE s.minimumOrderQuantity =:minimumOrderQuantity")
+    List<Supplier> getSupplierByMinimumOrderQuantity(@Param("minimumOrderQuantity") Integer minimumOrderQuantity);
 
 }
