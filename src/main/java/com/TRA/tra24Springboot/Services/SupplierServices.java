@@ -119,4 +119,8 @@ public class SupplierServices {
     public Supplier getSupplierById(Integer supplierId){
         return supplierRepository.getSupplierById(supplierId);
     }
+
+    public List<Supplier> getSupplierByCompanyName(String companyName){
+        return supplierRepository.getSupplierByCompanyName(companyName);
+    }
 }

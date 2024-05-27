@@ -69,6 +69,10 @@ public class SupplierController {
         return supplierServices.getSupplierById(supplierId);
     }
 
+    @GetMapping("getByCompanyName")
+    public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName){
+        return supplierServices.getSupplierByCompanyName(companyName);
+    }
 
 
 }
