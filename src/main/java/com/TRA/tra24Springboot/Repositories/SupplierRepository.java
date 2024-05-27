@@ -15,4 +15,8 @@ public interface SupplierRepository extends JpaRepository <Supplier,Integer>{
     //Query to get supplier by company name
     @Query("SELECT s FROM Supplier s WHERE s.companyName =:companyName")
     List<Supplier> getSupplierByCompanyName(@Param("companyName") String companyName);
+    //Query to get suppliers by country
+    @Query("SELECT s FROM Supplier s WHERE s.country =:country")
+    List<Supplier> getSupplierByCountry(@Param("country") String country);
+
 }

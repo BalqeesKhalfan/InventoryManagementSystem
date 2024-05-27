@@ -123,4 +123,9 @@ public class SupplierServices {
     public List<Supplier> getSupplierByCompanyName(String companyName){
         return supplierRepository.getSupplierByCompanyName(companyName);
     }
+
+    public List<Supplier> getSupplierByCountry(String countr){
+        return supplierRepository.getSupplierByCountry(countr);
+    }
+
 }

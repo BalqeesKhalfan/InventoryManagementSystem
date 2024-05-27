@@ -73,6 +73,10 @@ public class SupplierController {
     public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName){
         return supplierServices.getSupplierByCompanyName(companyName);
     }
+    @GetMapping("getByCountry")
+    public List<Supplier> getSupplierByCountry(@RequestParam String country){
+        return supplierServices.getSupplierByCountry(country);
+    }
 
 
 }
