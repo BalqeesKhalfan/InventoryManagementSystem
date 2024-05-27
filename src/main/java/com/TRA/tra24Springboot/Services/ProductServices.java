@@ -5,6 +5,7 @@ import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
 import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
 import com.TRA.tra24Springboot.Repositories.ProductRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,5 +90,8 @@ public class ProductServices {
     }
     public List<Product>getProductByCategory(String category) {
         return productRepository.findByProductByCategory(category);
+    }
+    public List<Product>getProductByIsActive(Boolean isActive) {
+        return productRepository.findByProductByIsActive(isActive);
     }
 }

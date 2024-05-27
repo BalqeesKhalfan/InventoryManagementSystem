@@ -81,4 +81,9 @@ public class ProductController {
         return productServices.getProductByCategory(category);
     }
 
+    @GetMapping("getByIsActive")
+    public List<Product> getProductByIsActive(@RequestParam Boolean isActive) {
+        return productServices.getProductByIsActive(isActive);
+    }
+
 }

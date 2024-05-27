@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Repositories;
 
 import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Models.Product;
+import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +29,8 @@ public interface ProductRepository extends JpaRepository <Product,Integer> {
     List<Product> findByProductBySize( @Param("size") String size );
     @Query("SELECT p from Product p WHERE p.category =:category")
     List<Product> findByProductByCategory( @Param("category") String category );
+    @Query("SELECT p from Product p WHERE p.isActive =:isActive")
+    List<Product> findByProductByIsActive( @Param("isActive") Boolean isActive );
 
    /** @Query("SELECT p from Product p WHERE p.productDetails.productName =:productName")
     ProductDTO getBYProduct(@Param("productName") String productName);**/
