@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.Order;
+import com.TRA.tra24Springboot.Models.PaymentType;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Services.SupplierServices;
@@ -91,6 +92,11 @@ public class SupplierController {
     @GetMapping("getByShippingMethods")
     public List<Supplier> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
         return supplierServices.findBySupplierByShippingMethods(shippingMethods);
+    }
+
+    @GetMapping("getByPayment")
+    public List<Supplier> getSupplierByPaymentMethod(@RequestParam PaymentType paymentMethods){
+        return supplierServices.getSupplierByPaymentMethod(paymentMethods);
     }
 
 

@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Repositories;
 
 import com.TRA.tra24Springboot.Models.ContactDetails;
+import com.TRA.tra24Springboot.Models.PaymentType;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +30,9 @@ public interface SupplierRepository extends JpaRepository <Supplier,Integer>{
 
     @Query("SELECT s FROM Supplier s WHERE s.shippingMethods =:shippingMethods")
     List<Supplier> findBySupplierByShippingMethods( @Param("shippingMethods") String shippingMethods );
+
+    //Query to get supplier by payment method
+    @Query("SELECT s FROM Supplier s WHERE s.paymentMethods =:paymentMethods")
+    List<Supplier> getSupplierByPaymentMethod(@Param("paymentMethods") PaymentType paymentMethods);
 
 }
