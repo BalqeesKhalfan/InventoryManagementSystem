@@ -36,4 +36,8 @@ public class InventoryServices {
         return InventoryDTO.convertToDTO(inventories);
 
     }
+
+    public Inventory getInventoryById(Integer inventoryId){
+        return inventoryRepository.getInventoryById(inventoryId);
+    }
 }

@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Controllers;
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
+import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
 import com.TRA.tra24Springboot.Services.InventoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,9 @@ public class InventoryController {
         return inventoryServices.getAll();
     }
 
-
+    @GetMapping("getById")
+    public Inventory getInventoryById(@RequestParam Integer inventoryId){
+        return inventoryServices.getInventoryById(inventoryId);
+    }
 
 }
