@@ -15,6 +15,7 @@ public class Inventory extends BaseEntity {
     List<Product> products;
     String location;
     String manager; //TODO: Update once user class created
+    String admin;
     List<String> workers; //TODO: Update user class created
     String supplier; //TODO: Update once supplier class created
     String phoneNumber;

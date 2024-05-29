@@ -93,4 +93,9 @@ public class InventoryController {
         return inventoryServices.getInventoryByLocation(location);
     }
 
+    @GetMapping("getByAdmin")
+    public List<Inventory> getInventoryByAdminName(@RequestParam String admin){
+        return inventoryServices.getInventoryByAdminName(admin);
+    }
+
 }

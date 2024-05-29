@@ -22,5 +22,9 @@ public interface InventoryRepository extends JpaRepository <Inventory,Integer> {
     @Query("SELECT i FROM Inventory i WHERE i.location =:location")
     List<Inventory> getInventoryByLocation(@Param("location") String location);
 
+    //Query to get inventory by admin name
+    @Query("SELECT i FROM Inventory i WHERE i.admin =:admin")
+    List<Inventory> getInventoryByAdminName(@Param("admin") String admin);
+
 
 }

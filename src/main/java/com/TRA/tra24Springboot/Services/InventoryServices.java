@@ -47,5 +47,8 @@ public class InventoryServices {
     public List<Inventory> getInventoryByLocation(String location){
         return inventoryRepository.getInventoryByLocation(location);
     }
+    public List<Inventory> getInventoryByAdminName(String admin){
+        return inventoryRepository.getInventoryByAdminName(admin);
+    }
 
 }
