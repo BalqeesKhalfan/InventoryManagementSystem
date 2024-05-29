@@ -88,5 +88,6 @@ public class InventoryController {
     public List<Inventory> getInventoryByAvailability(@RequestParam Boolean isActive){
         return inventoryServices.getInventoryByIsActive(isActive);
     }
+    
 
 }
