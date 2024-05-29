@@ -88,6 +88,9 @@ public class InventoryController {
     public List<Inventory> getInventoryByAvailability(@RequestParam Boolean isActive){
         return inventoryServices.getInventoryByIsActive(isActive);
     }
-    
+    @GetMapping("getByLocation")
+    public List<Inventory> getInventoryByLocation(@RequestParam String location) {
+        return inventoryServices.getInventoryByLocation(location);
+    }
 
 }

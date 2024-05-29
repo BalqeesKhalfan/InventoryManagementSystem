@@ -44,6 +44,8 @@ public class InventoryServices {
     public List<Inventory>getInventoryByIsActive(Boolean isActive) {
         return inventoryRepository.getInventoryByAvailability(isActive);
     }
-
+    public List<Inventory> getInventoryByLocation(String location){
+        return inventoryRepository.getInventoryByLocation(location);
+    }
 
 }
