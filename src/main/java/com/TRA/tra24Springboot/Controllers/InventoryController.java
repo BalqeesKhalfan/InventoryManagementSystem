@@ -84,5 +84,9 @@ public class InventoryController {
     public Inventory getInventoryById(@RequestParam Integer inventoryId){
         return inventoryServices.getInventoryById(inventoryId);
     }
+    @GetMapping("getByAvailability")
+    public List<Inventory> getInventoryByAvailability(@RequestParam Boolean isActive){
+        return inventoryServices.getInventoryByIsActive(isActive);
+    }
 
 }

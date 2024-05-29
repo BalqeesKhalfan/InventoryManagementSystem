@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
+import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,4 +41,9 @@ public class InventoryServices {
     public Inventory getInventoryById(Integer inventoryId){
         return inventoryRepository.getInventoryById(inventoryId);
     }
+    public List<Inventory>getInventoryByIsActive(Boolean isActive) {
+        return inventoryRepository.getInventoryByAvailability(isActive);
+    }
+
+
 }
