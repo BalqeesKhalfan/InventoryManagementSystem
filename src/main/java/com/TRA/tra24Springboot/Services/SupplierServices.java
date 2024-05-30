@@ -138,7 +138,6 @@ public class SupplierServices {
     public List<Supplier>findBySupplierByShippingMethods(String shippingMethods) {
         return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
     }
-
     public List<Supplier> getSupplierByPaymentMethod(PaymentType paymentMethods){
         return supplierRepository.getSupplierByPaymentMethod(paymentMethods);
     }
