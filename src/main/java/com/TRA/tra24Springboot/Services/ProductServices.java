@@ -42,12 +42,20 @@ public class ProductServices {
           productRepository.save(productFromDb);
         return "Success";
     }
-    public String deleteProductById(Integer productId){
+    public String deleteProductById(Integer productId) throws Exception{
+       try {
+           Product product =productRepository.getProductById(productId);
+           if (product == null){
+               throw new Exception("Product With ID : "+ productId + "is not found");
+           }
+           product.setIsActive(Boolean.FALSE);
+           System.out.println(product.toString());
+           productRepository.save(product);
+           return "Product Deleted Successfully";
 
-        Product productFromDb = productRepository.getProductById(productId);
-        productFromDb.setIsActive(Boolean.FALSE);
-        productRepository.save(productFromDb);
-        return "Success";
+       }catch (Exception e){
+           throw  new Exception("Failed to delete Product : "+ e.getMessage());
+       }
     }
 
     public String updateProductQuantity(Integer productId, Integer quantity) {
