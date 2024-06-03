@@ -84,9 +84,16 @@ public class ProductServices {
 
         return ProductDTO.convertToDTO(products);
     }
-   public Product getProductById(Integer productId){
-        return productRepository.getProductById(productId);
-
+   public Product getProductById(Integer productId)throws Exception {
+       try {
+           Product product = productRepository.getProductById(productId);
+           if (product == null) {
+               throw new Exception("Product with ID: " + productId + " is not found.");
+           }
+           return product;
+       } catch (Exception e) {
+           throw new Exception("Failed to retrieve product: " + e.getMessage(), e);
+       }
    }
    public List<Product> getProductsByName(String productName) {
        return productRepository.findByProductName(productName);
