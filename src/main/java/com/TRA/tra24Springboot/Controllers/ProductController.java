@@ -74,10 +74,15 @@ public class ProductController {
            return new ResponseEntity<>("Retrieving product failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
        }
    }
-  @GetMapping("getByName")
-  public List<Product> getProductsByName(@RequestParam String productName) {
-      return productServices.getProductsByName(productName);
-  }
+   @GetMapping("getByName")
+    public ResponseEntity<?>  getProductsByName(@RequestParam String productName) {
+       try {
+           List<Product> products = productServices.getProductsByName(productName);
+           return new ResponseEntity<>(products, HttpStatus.OK);
+       } catch (Exception e) {
+           return new ResponseEntity<>("Retrieving products by name failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+    }
     @GetMapping("getByColor")
     public List<Product> getProductsByColor(@RequestParam String color) {
         return productServices.getProductsByColor(color);

@@ -95,8 +95,16 @@ public class ProductServices {
            throw new Exception("Failed to retrieve product: " + e.getMessage(), e);
        }
    }
-   public List<Product> getProductsByName(String productName) {
-       return productRepository.findByProductName(productName);
+   public List<Product> getProductsByName(String productName)  throws Exception{
+       try {
+           List<Product> products = productRepository.findByProductName(productName);
+           if (products.isEmpty()) {
+               throw new Exception("No products found with name: " + productName);
+           }
+           return products;
+       } catch (Exception e) {
+           throw new Exception("Failed to retrieve products by name: " + e.getMessage(), e);
+       }
    }
     public List<Product> getProductsByColor(String color) {
         return productRepository.findByProductcolor(color);
