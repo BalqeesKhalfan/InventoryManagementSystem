@@ -121,8 +121,17 @@ public class ProductServices {
 
     }
 
-    public List<Product> getProductsByPrice(Double price) {
-        return productRepository.findByProductPrice(price);
+    public List<Product> getProductsByPrice(Double price) throws Exception {
+        try {
+            List<Product> products = productRepository.findByProductPrice(price);
+            if(products.isEmpty()){
+                throw  new Exception("No products found with price: " + price);
+            }
+            return  products;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With price: " + e.getMessage(), e);
+        }
+
     }
     public List<Product>getProductByCountry(String country) {
         return productRepository.findByProductByCountry(country);
