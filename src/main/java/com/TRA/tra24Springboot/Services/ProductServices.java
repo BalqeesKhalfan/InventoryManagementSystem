@@ -133,8 +133,18 @@ public class ProductServices {
         }
 
     }
-    public List<Product>getProductByCountry(String country) {
-        return productRepository.findByProductByCountry(country);
+    public List<Product>getProductByCountry(String country)  throws  Exception{
+        try {
+            List<Product> products = productRepository.findByProductByCountry(country);
+            if(products.isEmpty()){
+                throw  new Exception("No products found with country: " + country);
+            }
+            return  products;
+
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With country: " + e.getMessage(), e);
+        }
+
     }
     public List<Product>getProductBySize(String size) {
         return productRepository.findByProductBySize(size);

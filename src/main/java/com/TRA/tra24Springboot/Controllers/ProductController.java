@@ -104,8 +104,14 @@ public class ProductController {
 
     }
     @GetMapping("getByCountry")
-    public List<Product> getProductByCountry(@RequestParam String country) {
-        return productServices.getProductByCountry(country);
+    public ResponseEntity<?> getProductByCountry(@RequestParam String country) {
+       try {
+           List<Product> products = productServices.getProductByCountry(country);
+           return  new ResponseEntity<>(products,HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>("Retrieving products by country failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+
     }
     @GetMapping("getBySize")
     public List<Product> getProductBySize(@RequestParam String size) {
