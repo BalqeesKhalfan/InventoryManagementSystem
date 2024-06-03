@@ -158,8 +158,17 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products With size : " + e.getMessage(), e);
         }
     }
-    public List<Product>getProductByCategory(String category) {
-        return productRepository.findByProductByCategory(category);
+    public List<Product>getProductByCategory(String category) throws  Exception {
+        try {
+            List<Product> products = productRepository.findByProductByCategory(category);
+            if(products.isEmpty()){
+                throw  new Exception("No products found with category: " + category);
+            }
+            return  products;
+
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With category : " + e.getMessage(), e);
+        }
     }
     public List<Product>getProductByIsActive(Boolean isActive) {
         return productRepository.findByProductByIsActive(isActive);

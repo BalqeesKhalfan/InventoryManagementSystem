@@ -123,8 +123,13 @@ public class ProductController {
         }
     }
     @GetMapping("getByCategory")
-    public List<Product> getProductByCategory(@RequestParam String category) {
-        return productServices.getProductByCategory(category);
+    public  ResponseEntity<?> getProductByCategory(@RequestParam String category) {
+        try {
+            List<Product> products = productServices.getProductByCategory(category);
+            return  new ResponseEntity<>(products,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving products by category failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("getByIsActive")
