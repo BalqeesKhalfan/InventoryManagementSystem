@@ -58,13 +58,21 @@ public class ProductServices {
        }
     }
 
-    public String updateProductQuantity(Integer productId, Integer quantity) {
-        Product productFromDb = productRepository.getProductById(productId);
-        productFromDb.setQuantity(quantity);
-        productFromDb.setUpdatedDate(new Date());
+    public String updateProductQuantity(Integer productId, Integer quantity) throws Exception{
+        try {
+            Product productFromDb = productRepository.getProductById(productId);
+            if (productFromDb == null) {
+                throw new Exception("Product with ID: " + productId + " is not found.");
+            }
 
-        productRepository.save(productFromDb);
-        return "Updated Successfully";
+            productFromDb.setQuantity(quantity);
+            productFromDb.setUpdatedDate(new Date());
+
+            productRepository.save(productFromDb);
+            return "Updated Successfully";
+        } catch (Exception e) {
+            throw new Exception("Failed to update product quantity: " + e.getMessage(), e);
+        }
     }
     public Product updateProduct(Product product)
     {

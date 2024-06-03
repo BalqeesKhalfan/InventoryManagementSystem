@@ -45,21 +45,26 @@ public class ProductController {
 
 
     @PutMapping("update")
-    public String updateProduct(@RequestParam Integer id, @RequestParam Integer quantity) {
-        return productServices.updateProductQuantity(id, quantity);
+    public <T> ResponseEntity<T>updateProduct(@RequestParam Integer id, @RequestParam Integer quantity) {
+        try{
+            String result = productServices.updateProductQuantity(id,quantity);
+            return (ResponseEntity<T>) new ResponseEntity<>(result,HttpStatus.OK);
+        }catch (Exception e){
+            return (ResponseEntity<T>) new ResponseEntity<>("updating Faild!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("get")
-    public <T> ResponseEntity<T> getProducts(){
-
-        return new ResponseEntity(productServices.getProduct(), HttpStatus.OK) ;
+    public <T>ResponseEntity<T> getProducts(){
+        return new ResponseEntity(productServices.getProduct(),HttpStatus.OK);
     }
 
-    @GetMapping("getDto")
+  /**  @GetMapping("getDto")
     public List<ProductDTO> getProduct(){
 
         return productServices.getProduct();
-    }
+    }**/
    @GetMapping("getById")
     public Product getProductById(@RequestParam Integer productId){
         return productServices.getProductById(productId);
