@@ -106,8 +106,19 @@ public class ProductServices {
            throw new Exception("Failed to retrieve products by name: " + e.getMessage(), e);
        }
    }
-    public List<Product> getProductsByColor(String color) {
-        return productRepository.findByProductcolor(color);
+    public List<Product> getProductsByColor(String color) throws Exception{
+
+        try {
+            List<Product> products = productRepository.findByProductcolor(color);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with color: " + color);
+            }
+            return products;
+
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With color: " + e.getMessage(), e);
+        }
+
     }
 
     public List<Product> getProductsByPrice(Double price) {

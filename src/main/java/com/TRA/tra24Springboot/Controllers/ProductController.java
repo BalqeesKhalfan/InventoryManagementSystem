@@ -84,8 +84,14 @@ public class ProductController {
        }
     }
     @GetMapping("getByColor")
-    public List<Product> getProductsByColor(@RequestParam String color) {
-        return productServices.getProductsByColor(color);
+    public ResponseEntity<?> getProductsByColor(@RequestParam String color) {
+       try {
+           List<Product> products = productServices.getProductsByColor(color);
+           return  new ResponseEntity<>(products,HttpStatus.OK);
+       }catch (Exception e ){
+           return new ResponseEntity<>("Retrieving products by color failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+
     }
     @GetMapping("getByPrice")
     public List<Product> getProductsByPrice(@RequestParam Double price) {
