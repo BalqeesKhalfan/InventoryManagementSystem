@@ -146,8 +146,17 @@ public class ProductServices {
         }
 
     }
-    public List<Product>getProductBySize(String size) {
-        return productRepository.findByProductBySize(size);
+    public List<Product>getProductBySize(String size) throws  Exception {
+        try {
+            List<Product> products = productRepository.findByProductBySize(size);
+            if(products.isEmpty()){
+                throw  new Exception("No products found with Size: " + size);
+            }
+            return  products;
+
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With size : " + e.getMessage(), e);
+        }
     }
     public List<Product>getProductByCategory(String category) {
         return productRepository.findByProductByCategory(category);
