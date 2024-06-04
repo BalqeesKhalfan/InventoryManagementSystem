@@ -170,7 +170,18 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products With category : " + e.getMessage(), e);
         }
     }
-    public List<Product>getProductByIsActive(Boolean isActive) {
-        return productRepository.findByProductByIsActive(isActive);
+    public List<Product>getProductByIsActive(Boolean isActive) throws  Exception{
+        try {
+            List<Product> products = productRepository.findByProductByIsActive(isActive);
+            if(products.isEmpty()){
+                throw  new Exception("No products found with isActive: " + isActive);
+            }
+            return  products;
+
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve products With isActive : " + e.getMessage(), e);
+
+        }
+
     }
 }
