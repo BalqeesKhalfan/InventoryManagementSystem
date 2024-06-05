@@ -79,10 +79,16 @@ public class ProductServices {
         return productRepository.save(product);
     }
 
-    public List<ProductDTO> getProduct(){
-        List <Product> products = productRepository.findAll();
-
-        return ProductDTO.convertToDTO(products);
+    public List<ProductDTO> getProduct() throws Exception {
+        try {
+            List<Product> products = productRepository.findAll();
+            if (products.isEmpty()) {
+                throw new Exception("No products found");
+            }
+            return ProductDTO.convertToDTO(products);
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve products: " + e.getMessage(), e);
+        }
     }
    public Product getProductById(Integer productId)throws Exception {
        try {

@@ -62,7 +62,7 @@ public class ProductController {
     }
 
     @GetMapping("get")
-    public <T> ResponseEntity<T> getProducts() {
+    public <T> ResponseEntity<T> getProducts() throws Exception {
         mailingService.sendSimpleMail();
         return new ResponseEntity(productServices.getProduct(), HttpStatus.OK);
     }
