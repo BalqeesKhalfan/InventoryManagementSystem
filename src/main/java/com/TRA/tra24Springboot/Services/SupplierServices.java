@@ -124,11 +124,19 @@ public class SupplierServices {
             return "Removed Successfully";
         } catch (Exception e) {
             throw new Exception("Failed to remove Supplier : " + e.getMessage(), e);
-
-        }}
-        public List<SupplierDTO> getSuppliers () {
+        }
+    }
+        public List<SupplierDTO> getSuppliers () throws  Exception {
+        try {
             List<Supplier> suppliers = supplierRepository.findAll();
+            if (suppliers.isEmpty()) {
+                throw new Exception("No Supplier found");
+            }
             return SupplierDTO.convertToDTOList(suppliers);
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve Suppliers: " + e.getMessage(), e);
+        }
+
         }
         public Supplier getSupplierById (Integer supplierId){
             return supplierRepository.getSupplierById(supplierId);

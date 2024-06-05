@@ -47,37 +47,17 @@ public class SupplierController {
     }
 
 
-    //UPDATE SUPPLIER
 
-    /**
-     * @PutMapping("update") public Supplier updateSupplier(@RequestBody Supplier supplierUpdating) {
-     * <p>
-     * <p>
-     * ContactDetails pd = supplierUpdating.getContactDetails();
-     * pd.setUpdatedDate(new Date());
-     * <p>
-     * supplierUpdating.setContactDetails(pd);
-     * supplierUpdating.setUpdatedDate(new Date());
-     * <p>
-     * globalSupplier= supplierUpdating;
-     * return supplierRepository.save(supplierUpdating);
-     * }
-     * // delete
-     * @PostMapping("delete/{id}") public String deleteSupplier(@PathVariable Integer id){
-     * <p>
-     * if(globalSupplier.getId().equals(id)){
-     * globalSupplier.setIsActive(Boolean.FALSE);
-     * System.out.println(globalSupplier.toString());
-     * <p>
-     * }
-     * return "Success!";
-     * }
-     **/
 
     //method to get suppliers
     @GetMapping("get")
-    public List<SupplierDTO> getAll() {
-        return supplierServices.getSuppliers();
+    public ResponseEntity<?> getAll() {
+        try {
+            List<SupplierDTO> suppliers = supplierServices.getSuppliers();
+            return new ResponseEntity<>(suppliers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Retrieving suppliers failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("getById")
