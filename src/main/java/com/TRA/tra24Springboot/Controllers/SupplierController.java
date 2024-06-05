@@ -16,82 +16,90 @@ import java.util.List;
 @RestController
 @RequestMapping("/supplier")
 public class SupplierController {
-   @Autowired
+    @Autowired
     SupplierServices supplierServices;
 
 
     @PostMapping("add")
-    public Supplier addSupplier( Supplier supplier){
+    public Supplier addSupplier(Supplier supplier) {
 
         return supplierServices.addSupplier(supplier);
     }
+
     @PutMapping("update")
     public <T> ResponseEntity<T> updateSupplier(@RequestParam Integer id, @RequestParam Integer quantity) {
-        try{
-            String result = supplierServices.updateMinimumOrderQuantity(id,quantity);
+        try {
+            String result = supplierServices.updateMinimumOrderQuantity(id, quantity);
             return (ResponseEntity<T>) new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (Exception e){
-            return (ResponseEntity<T>) new ResponseEntity<>("updating Faild!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return (ResponseEntity<T>) new ResponseEntity<>("updating Faild!" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
-    @PostMapping("delete")
-    public String deleteSupplier(@PathVariable Integer id){
-        return supplierServices.remove(id);
+
+    public <T> ResponseEntity<T> deleteSupplier(@PathVariable Integer id) {
+        try {
+            String result = supplierServices.remove(id);
+            return (ResponseEntity<T>) new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return (ResponseEntity<T>) new ResponseEntity<>("Deleting Supplier  Faild!" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
 
 
     //UPDATE SUPPLIER
-   /** @PutMapping("update")
-    public Supplier updateSupplier(@RequestBody Supplier supplierUpdating) {
 
+    /**
+     * @PutMapping("update") public Supplier updateSupplier(@RequestBody Supplier supplierUpdating) {
+     * <p>
+     * <p>
+     * ContactDetails pd = supplierUpdating.getContactDetails();
+     * pd.setUpdatedDate(new Date());
+     * <p>
+     * supplierUpdating.setContactDetails(pd);
+     * supplierUpdating.setUpdatedDate(new Date());
+     * <p>
+     * globalSupplier= supplierUpdating;
+     * return supplierRepository.save(supplierUpdating);
+     * }
+     * // delete
+     * @PostMapping("delete/{id}") public String deleteSupplier(@PathVariable Integer id){
+     * <p>
+     * if(globalSupplier.getId().equals(id)){
+     * globalSupplier.setIsActive(Boolean.FALSE);
+     * System.out.println(globalSupplier.toString());
+     * <p>
+     * }
+     * return "Success!";
+     * }
+     **/
 
-        ContactDetails pd = supplierUpdating.getContactDetails();
-        pd.setUpdatedDate(new Date());
-
-        supplierUpdating.setContactDetails(pd);
-        supplierUpdating.setUpdatedDate(new Date());
-
-        globalSupplier= supplierUpdating;
-        return supplierRepository.save(supplierUpdating);
+    //method to get suppliers
+    @GetMapping("get")
+    public List<SupplierDTO> getAll() {
+        return supplierServices.getSuppliers();
     }
-    // delete
-    @PostMapping("delete/{id}")
-    public String deleteSupplier(@PathVariable Integer id){
 
-        if(globalSupplier.getId().equals(id)){
-            globalSupplier.setIsActive(Boolean.FALSE);
-            System.out.println(globalSupplier.toString());
-
-        }
-        return "Success!";
-    }**/
-
-   //method to get suppliers
-   @GetMapping("get")
-   public List<SupplierDTO> getAll(){
-       return supplierServices.getSuppliers();
-   }
     @GetMapping("getById")
-    public Supplier getSupplierById(@RequestParam Integer supplierId){
+    public Supplier getSupplierById(@RequestParam Integer supplierId) {
         return supplierServices.getSupplierById(supplierId);
     }
 
     @GetMapping("getByCompanyName")
-    public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName){
+    public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName) {
         return supplierServices.getSupplierByCompanyName(companyName);
     }
+
     @GetMapping("getByCountry")
-    public List<Supplier> getSupplierByCountry(@RequestParam String country){
+    public List<Supplier> getSupplierByCountry(@RequestParam String country) {
         return supplierServices.getSupplierByCountry(country);
     }
 
     @GetMapping("getByMinQuantity")
-    public List<Supplier> getSupplierByMinimumOrderQuantity(@RequestParam Integer minimumOrderQuantity){
+    public List<Supplier> getSupplierByMinimumOrderQuantity(@RequestParam Integer minimumOrderQuantity) {
         return supplierServices.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
     }
+
     @GetMapping("getByIsActive")
     public List<Supplier> getSupplierByIsActive(@RequestParam Boolean isActive) {
         return supplierServices.getSupplierByIsActive(isActive);
@@ -101,8 +109,9 @@ public class SupplierController {
     public List<Supplier> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
         return supplierServices.findBySupplierByShippingMethods(shippingMethods);
     }
+
     @GetMapping("getByPayment")
-    public List<Supplier> getSupplierByPaymentMethod(@RequestParam PaymentType paymentMethods){
+    public List<Supplier> getSupplierByPaymentMethod(@RequestParam PaymentType paymentMethods) {
         return supplierServices.getSupplierByPaymentMethod(paymentMethods);
     }
 

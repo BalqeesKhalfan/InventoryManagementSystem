@@ -29,23 +29,23 @@ public class SupplierServices {
     OrderRepository orderRepository;
     @Autowired
     ContactDetailsServices contactDetailsServices;
-    public Supplier addSupplier(Supplier supplier){
+
+    public Supplier addSupplier(Supplier supplier) {
         //ContactDetails contactDetails = new ContactDetails();
 
-       /** supplier.setCompanyName("Example Supplier");
-        supplier.setCountry("Oman");
-        supplier.setIsActive(Boolean.TRUE);
-        supplier.setPaymentMethods("CASH");
-        supplier.setShippingMethods("AirShipping ");
-        supplier.setNextDeliveryTime(new Date());
-        supplier.setComplaints("high ");
-        supplier.setMinimumOrderQuantity("6");
-        supplier.setCreatedDate(new Date());
-        Order order = orderServices.createOrder(supplier.getOrders().get(0));
-        supplier.setOrders(Arrays.asList(order));
-        ContactDetails contactDetails = contactDetailsServices.addContactDetails(supplier.getContactDetails());
-        supplier.setContactDetails(contactDetails);**/
-
+        /** supplier.setCompanyName("Example Supplier");
+         supplier.setCountry("Oman");
+         supplier.setIsActive(Boolean.TRUE);
+         supplier.setPaymentMethods("CASH");
+         supplier.setShippingMethods("AirShipping ");
+         supplier.setNextDeliveryTime(new Date());
+         supplier.setComplaints("high ");
+         supplier.setMinimumOrderQuantity("6");
+         supplier.setCreatedDate(new Date());
+         Order order = orderServices.createOrder(supplier.getOrders().get(0));
+         supplier.setOrders(Arrays.asList(order));
+         ContactDetails contactDetails = contactDetailsServices.addContactDetails(supplier.getContactDetails());
+         supplier.setContactDetails(contactDetails);**/
 
 
         ProductDetails productDetails = new ProductDetails();
@@ -95,7 +95,7 @@ public class SupplierServices {
         return supplierRepository.save(supplier);
     }
 
-    public String updateMinimumOrderQuantity(Integer supplierId, Integer quantity) throws  Exception{
+    public String updateMinimumOrderQuantity(Integer supplierId, Integer quantity) throws Exception {
 
         try {
             Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
@@ -107,45 +107,52 @@ public class SupplierServices {
 
             supplierRepository.save(supplierFromDb);
             return "Updated Successfully";
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to update Minimum Order  quantity: " + e.getMessage(), e);
         }
     }
 
-    public String remove(Integer supplierId){
-        Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
-        supplierFromDb.setIsActive(Boolean.FALSE);
-        System.out.println(supplierFromDb.toString());
-        supplierRepository.save(supplierFromDb);
-        return "Removed Successfully";
-    }
-    public List<SupplierDTO> getSuppliers(){
-        List<Supplier> suppliers = supplierRepository.findAll();
-        return SupplierDTO.convertToDTOList(suppliers);
-    }
-    public Supplier getSupplierById(Integer supplierId){
-        return supplierRepository.getSupplierById(supplierId);
-    }
+    public String remove(Integer supplierId) throws Exception {
+        try {
+            Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
+            if (supplierFromDb == null) {
+                throw new Exception("Supplier with ID: " + supplierId + " is not found.");
+            }
+            supplierFromDb.setIsActive(Boolean.FALSE);
+            System.out.println(supplierFromDb.toString());
+            supplierRepository.save(supplierFromDb);
+            return "Removed Successfully";
+        } catch (Exception e) {
+            throw new Exception("Failed to remove Supplier : " + e.getMessage(), e);
 
-    public List<Supplier> getSupplierByCompanyName(String companyName){
-        return supplierRepository.getSupplierByCompanyName(companyName);
-    }
+        }}
+        public List<SupplierDTO> getSuppliers () {
+            List<Supplier> suppliers = supplierRepository.findAll();
+            return SupplierDTO.convertToDTOList(suppliers);
+        }
+        public Supplier getSupplierById (Integer supplierId){
+            return supplierRepository.getSupplierById(supplierId);
+        }
 
-    public List<Supplier> getSupplierByCountry(String countr){
-        return supplierRepository.getSupplierByCountry(countr);
-    }
+        public List<Supplier> getSupplierByCompanyName (String companyName){
+            return supplierRepository.getSupplierByCompanyName(companyName);
+        }
 
-    public List<Supplier> getSupplierByMinimumOrderQuantity(Integer minimumOrderQuantity){
-        return supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
-    }
+        public List<Supplier> getSupplierByCountry (String countr){
+            return supplierRepository.getSupplierByCountry(countr);
+        }
 
-    public List<Supplier>getSupplierByIsActive(Boolean isActive) {
-        return supplierRepository.findBySupplierByIsActive(isActive);
+        public List<Supplier> getSupplierByMinimumOrderQuantity (Integer minimumOrderQuantity){
+            return supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
+        }
+
+        public List<Supplier> getSupplierByIsActive (Boolean isActive){
+            return supplierRepository.findBySupplierByIsActive(isActive);
+        }
+        public List<Supplier> findBySupplierByShippingMethods (String shippingMethods){
+            return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
+        }
+        public List<Supplier> getSupplierByPaymentMethod (PaymentType paymentMethods){
+            return supplierRepository.getSupplierByPaymentMethod(paymentMethods);
+        }
     }
-    public List<Supplier>findBySupplierByShippingMethods(String shippingMethods) {
-        return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
-    }
-    public List<Supplier> getSupplierByPaymentMethod(PaymentType paymentMethods){
-        return supplierRepository.getSupplierByPaymentMethod(paymentMethods);
-    }
-}
