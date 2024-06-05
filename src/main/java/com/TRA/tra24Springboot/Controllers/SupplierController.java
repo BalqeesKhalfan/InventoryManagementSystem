@@ -7,6 +7,8 @@ import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Services.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,14 @@ public class SupplierController {
         return supplierServices.addSupplier(supplier);
     }
     @PutMapping("update")
-    public String updateSupplier(@RequestParam Integer id, @RequestParam Integer quantity) {
-        return supplierServices.updateMinimumOrderQuantity(id,quantity);
+    public <T> ResponseEntity<T> updateSupplier(@RequestParam Integer id, @RequestParam Integer quantity) {
+        try{
+            String result = supplierServices.updateMinimumOrderQuantity(id,quantity);
+            return (ResponseEntity<T>) new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            return (ResponseEntity<T>) new ResponseEntity<>("updating Faild!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @PostMapping("delete")
     public String deleteSupplier(@PathVariable Integer id){

@@ -95,14 +95,21 @@ public class SupplierServices {
         return supplierRepository.save(supplier);
     }
 
-    public String updateMinimumOrderQuantity(Integer supplierId, Integer quantity){
-        Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
-      //  Supplier supplier = supplierRepository.getById(suppierId);
-        supplierFromDb.setMinimumOrderQuantity(quantity);
-        supplierFromDb.setUpdatedDate(new Date());
+    public String updateMinimumOrderQuantity(Integer supplierId, Integer quantity) throws  Exception{
 
-        supplierRepository.save(supplierFromDb);
-        return "updated successfully";
+        try {
+            Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
+            if (supplierFromDb == null) {
+                throw new Exception("Supplier with ID: " + supplierId + " is not found.");
+            }
+            supplierFromDb.setMinimumOrderQuantity(quantity);
+            supplierFromDb.setUpdatedDate(new Date());
+
+            supplierRepository.save(supplierFromDb);
+            return "Updated Successfully";
+        }catch (Exception e){
+            throw new Exception("Failed to update Minimum Order  quantity: " + e.getMessage(), e);
+        }
     }
 
     public String remove(Integer supplierId){
