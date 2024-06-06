@@ -149,9 +149,6 @@ public class SupplierServices {
             throw new Exception("Failed to retrieve Supplier: " + e.getMessage(), e);
         }
     }
-
-
-
         public List<Supplier> getSupplierByCompanyName (String companyName) throws  Exception{
         try {
             List<Supplier> suppliers = supplierRepository.getSupplierByCompanyName(companyName);
@@ -159,14 +156,21 @@ public class SupplierServices {
                 throw new Exception("No Supplier found with Company Name " + companyName);
             }
             return suppliers;
-        }catch (Exception e)
-        {throw new Exception("Failed to retrieve supliers by name: " + e.getMessage(), e);}
-
+        }catch (Exception e) {
+            throw new Exception("Failed to retrieve suppliers by Company name: " + e.getMessage(), e);}
      }
+      public List<Supplier> getSupplierByCountry (String countr) throws  Exception{
+           try {
+               List<Supplier> suppliers = supplierRepository.getSupplierByCountry(countr);
+               if (suppliers.isEmpty()) {
+                   throw new Exception("No Supplier found with Country  Name " + countr);
+               }
+               return suppliers;
+           }catch (Exception e){
+               throw new Exception("Failed to retrieve suppliers by Country  Name"+e.getMessage());
+           }
 
-      public List<Supplier> getSupplierByCountry (String countr){
-            return supplierRepository.getSupplierByCountry(countr);
-        }
+       }
 
         public List<Supplier> getSupplierByMinimumOrderQuantity (Integer minimumOrderQuantity){
             return supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);

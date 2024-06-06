@@ -80,8 +80,14 @@ public class SupplierController {
     }
 
     @GetMapping("getByCountry")
-    public List<Supplier> getSupplierByCountry(@RequestParam String country) {
-        return supplierServices.getSupplierByCountry(country);
+    public ResponseEntity<?> getSupplierByCountry(@RequestParam String country) {
+        try {
+            List<Supplier> suppliers = supplierServices.getSupplierByCountry(country);
+            return new ResponseEntity<>(suppliers,HttpStatus.OK);
+        }catch (Exception e){
+            return  new ResponseEntity<>("Retrieving suppliers by contry name failed!"+ e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("getByMinQuantity")
