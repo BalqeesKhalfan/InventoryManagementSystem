@@ -118,12 +118,17 @@ public class SupplierController {
         }catch (Exception e){
             return new ResponseEntity<>("Retrieving suppliers by Shipping Method ! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping("getByPayment")
-    public List<Supplier> getSupplierByPaymentMethod(@RequestParam PaymentType paymentMethods) {
-        return supplierServices.getSupplierByPaymentMethod(paymentMethods);
+    public ResponseEntity<?> getSupplierByPaymentMethod(@RequestParam PaymentType paymentMethods) {
+        try {
+            List<Supplier> suppliers = supplierServices.getSupplierByPaymentMethod(paymentMethods);
+            return  new ResponseEntity<>(suppliers,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving suppliers by Payment Type  ! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 

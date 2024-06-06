@@ -206,9 +206,17 @@ public class SupplierServices {
            }catch (Exception e){
                throw new Exception("Failed to retrieve suppliers shipping Method : " + e.getMessage(), e);
            }
-
         }
-        public List<Supplier> getSupplierByPaymentMethod (PaymentType paymentMethods){
-            return supplierRepository.getSupplierByPaymentMethod(paymentMethods);
+        public List<Supplier> getSupplierByPaymentMethod (PaymentType paymentMethods) throws  Exception{
+           try {
+               List<Supplier> suppliers = supplierRepository.getSupplierByPaymentMethod(paymentMethods);
+               if(suppliers.isEmpty()){
+                   throw  new Exception("No suppliers found with this Payment method "+paymentMethods);
+               }
+               return suppliers;
+           }catch (Exception e){
+               throw new Exception("Failed to retrieve suppliers Payment method : " + e.getMessage(), e);
+           }
+
         }
     }
