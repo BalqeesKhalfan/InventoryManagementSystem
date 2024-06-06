@@ -152,11 +152,19 @@ public class SupplierServices {
 
 
 
-        public List<Supplier> getSupplierByCompanyName (String companyName){
-            return supplierRepository.getSupplierByCompanyName(companyName);
-        }
+        public List<Supplier> getSupplierByCompanyName (String companyName) throws  Exception{
+        try {
+            List<Supplier> suppliers = supplierRepository.getSupplierByCompanyName(companyName);
+            if (suppliers.isEmpty()) {
+                throw new Exception("No Supplier found with Company Name " + companyName);
+            }
+            return suppliers;
+        }catch (Exception e)
+        {throw new Exception("Failed to retrieve supliers by name: " + e.getMessage(), e);}
 
-        public List<Supplier> getSupplierByCountry (String countr){
+     }
+
+      public List<Supplier> getSupplierByCountry (String countr){
             return supplierRepository.getSupplierByCountry(countr);
         }
 

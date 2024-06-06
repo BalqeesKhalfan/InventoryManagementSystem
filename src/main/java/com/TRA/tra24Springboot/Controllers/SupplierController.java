@@ -46,9 +46,6 @@ public class SupplierController {
         }
     }
 
-
-
-
     //method to get suppliers
     @GetMapping("get")
     public ResponseEntity<?> getAll() {
@@ -71,11 +68,15 @@ public class SupplierController {
         }
 
     }
-
-
     @GetMapping("getByCompanyName")
-    public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName) {
-        return supplierServices.getSupplierByCompanyName(companyName);
+    public ResponseEntity<?> getSupplierByCompanyName(@RequestParam String companyName) {
+        try {
+            List<Supplier> suppliers = supplierServices.getSupplierByCompanyName(companyName);
+            return new ResponseEntity<>(suppliers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Retrieving suppliers by company name  failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("getByCountry")
