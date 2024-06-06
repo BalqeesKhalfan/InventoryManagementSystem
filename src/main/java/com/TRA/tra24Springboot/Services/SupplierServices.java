@@ -134,13 +134,23 @@ public class SupplierServices {
             }
             return SupplierDTO.convertToDTOList(suppliers);
         }catch (Exception e){
-            throw new Exception("Failed to retrieve Suppliers: " + e.getMessage(), e);
+            throw new Exception("Failed to retrieve Suppliers : " + e.getMessage(), e);
         }
 
         }
-        public Supplier getSupplierById (Integer supplierId){
-            return supplierRepository.getSupplierById(supplierId);
+        public Supplier getSupplierById (Integer supplierId)throws Exception{
+        try {
+            Supplier supplier = supplierRepository.getSupplierById(supplierId);
+            if(supplier == null){
+                throw  new Exception("Supplier with ID "+supplierId+" is not found.");
+            }
+            return supplier;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve Supplier: " + e.getMessage(), e);
         }
+    }
+
+
 
         public List<Supplier> getSupplierByCompanyName (String companyName){
             return supplierRepository.getSupplierByCompanyName(companyName);

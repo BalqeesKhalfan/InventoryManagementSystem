@@ -61,9 +61,17 @@ public class SupplierController {
     }
 
     @GetMapping("getById")
-    public Supplier getSupplierById(@RequestParam Integer supplierId) {
-        return supplierServices.getSupplierById(supplierId);
+    public ResponseEntity<?> getSupplierById(@RequestParam Integer supplierId) {
+        try {
+            Supplier supplier = supplierServices.getSupplierById(supplierId);
+            return  new ResponseEntity<>(supplier, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving Supplier failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
+
 
     @GetMapping("getByCompanyName")
     public List<Supplier> getSupplierByCompanyName(@RequestParam String companyName) {
