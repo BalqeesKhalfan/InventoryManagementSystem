@@ -172,8 +172,16 @@ public class SupplierServices {
 
        }
 
-        public List<Supplier> getSupplierByMinimumOrderQuantity (Integer minimumOrderQuantity){
-            return supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
+        public List<Supplier> getSupplierByMinimumOrderQuantity (Integer minimumOrderQuantity) throws  Exception{
+        try{
+            List<Supplier> suppliers = supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
+            if (suppliers.isEmpty()){
+                throw new Exception("No Suppliers found with Minimum Order Quantity"+minimumOrderQuantity);
+            }
+            return suppliers;
+        }catch (Exception e){
+            throw  new Exception("Failed to retrieve suppliers By Minimum Order Quantity"+e.getMessage());
+        }
         }
 
         public List<Supplier> getSupplierByIsActive (Boolean isActive){
