@@ -184,9 +184,18 @@ public class SupplierServices {
         }
         }
 
-        public List<Supplier> getSupplierByIsActive (Boolean isActive){
-            return supplierRepository.findBySupplierByIsActive(isActive);
+        public List<Supplier> getSupplierByIsActive (Boolean isActive)throws  Exception{
+            try {
+                List<Supplier> suppliers = supplierRepository.findBySupplierByIsActive(isActive);
+                if(suppliers.isEmpty()){
+                    throw  new Exception("No suppliers found with isActive: " + isActive);
+                }
+                return  suppliers;
+            }catch (Exception e){
+                throw new Exception("Failed to retrieve suppliers With isActive : " + e.getMessage(), e);
+            }
         }
+
         public List<Supplier> findBySupplierByShippingMethods (String shippingMethods){
             return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
         }

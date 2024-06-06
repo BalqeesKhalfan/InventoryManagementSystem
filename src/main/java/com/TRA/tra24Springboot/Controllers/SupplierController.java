@@ -101,10 +101,15 @@ public class SupplierController {
     }
 
     @GetMapping("getByIsActive")
-    public List<Supplier> getSupplierByIsActive(@RequestParam Boolean isActive) {
-        return supplierServices.getSupplierByIsActive(isActive);
-    }
+    public ResponseEntity<?> getSupplierByIsActive(@RequestParam Boolean isActive) {
+        try {
+            List<Supplier> suppliers = supplierServices.getSupplierByIsActive(isActive);
+            return  new ResponseEntity<>(suppliers,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving suppliers by isActive failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+    }
     @GetMapping("getByShippingMethods")
     public List<Supplier> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
         return supplierServices.findBySupplierByShippingMethods(shippingMethods);
