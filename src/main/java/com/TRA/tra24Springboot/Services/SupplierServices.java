@@ -196,8 +196,17 @@ public class SupplierServices {
             }
         }
 
-        public List<Supplier> findBySupplierByShippingMethods (String shippingMethods){
-            return supplierRepository.findBySupplierByShippingMethods(shippingMethods);
+        public List<Supplier> findBySupplierByShippingMethods (String shippingMethods) throws  Exception{
+           try {
+               List<Supplier> suppliers = supplierRepository.findBySupplierByShippingMethods(shippingMethods);
+               if(suppliers.isEmpty()){
+                   throw  new Exception("No suppliers found with  this shipping Method: " + shippingMethods);
+               }
+               return  suppliers;
+           }catch (Exception e){
+               throw new Exception("Failed to retrieve suppliers shipping Method : " + e.getMessage(), e);
+           }
+
         }
         public List<Supplier> getSupplierByPaymentMethod (PaymentType paymentMethods){
             return supplierRepository.getSupplierByPaymentMethod(paymentMethods);

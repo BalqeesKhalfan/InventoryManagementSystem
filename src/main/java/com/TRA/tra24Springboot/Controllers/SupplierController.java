@@ -111,8 +111,14 @@ public class SupplierController {
 
     }
     @GetMapping("getByShippingMethods")
-    public List<Supplier> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
-        return supplierServices.findBySupplierByShippingMethods(shippingMethods);
+    public ResponseEntity<?> findBySupplierByShippingMethods(@RequestParam String shippingMethods) {
+        try{
+            List<Supplier> suppliers = supplierServices.findBySupplierByShippingMethods(shippingMethods);
+            return  new ResponseEntity<>(suppliers,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving suppliers by Shipping Method ! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("getByPayment")
