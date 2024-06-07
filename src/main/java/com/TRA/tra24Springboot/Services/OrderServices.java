@@ -36,10 +36,18 @@ public class OrderServices {
         return orderRepository.save(order);
     }
 
-    public Order updateOrder(@RequestParam Integer orderId) {
-        Order orderFromDb = orderRepository.getOrderById(orderId);
-        orderFromDb.setOrderDate(new Date());
-        return orderRepository.save(orderFromDb);
+    public Order updateOrder(@RequestParam Integer orderId) throws  Exception {
+        try {
+            Order orderFromDb = orderRepository.getOrderById(orderId);
+            if(orderFromDb == null){
+                throw new Exception("Order with ID : "+orderId+" is not found.");
+            }
+            orderFromDb.setOrderDate(new Date());
+
+            return orderRepository.save(orderFromDb);
+        }catch (Exception e){
+            throw new Exception("Failed to update order: " + e.getMessage(), e);
+        }
     }
 
     public String cancelOrder(@PathVariable("orderId") Integer orderId) {

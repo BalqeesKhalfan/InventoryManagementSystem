@@ -6,6 +6,8 @@ import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import com.TRA.tra24Springboot.Services.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -22,8 +24,14 @@ public class OrderController {
         return orderServices.createOrder(order);
     }
     @PutMapping("update")
-    public Order updateOrder(@RequestParam Integer orderId) {
-        return orderServices.updateOrder(orderId);
+    public  <T>ResponseEntity<T>  updateOrder(@RequestParam Integer orderId) {
+        try {
+            Order result = orderServices.updateOrder(orderId);
+            return (ResponseEntity<T>) new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e) {
+            return (ResponseEntity<T>) new ResponseEntity<>("updating Faild!" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PostMapping("/cancel/{orderId}")
