@@ -36,7 +36,7 @@ public class SupplierController {
         }
 
     }
-
+    @PostMapping("delete")
     public <T> ResponseEntity<T> deleteSupplier(@PathVariable Integer id) {
         try {
             String result = supplierServices.remove(id);
