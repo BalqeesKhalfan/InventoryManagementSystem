@@ -80,8 +80,14 @@ public class OrderController {
 
     }
     @GetMapping("getByPaymentType")
-    public List<Order> getOrderByPaymentType(@RequestParam PaymentType paymentType){
-        return orderServices.getOrderByPaymentType(paymentType);
+    public ResponseEntity<?> getOrderByPaymentType(@RequestParam PaymentType paymentType){
+        try {
+            List<Order>orders =orderServices.getOrderByPaymentType(paymentType);
+            return  new ResponseEntity<>(orders,HttpStatus.OK);
+
+        }catch (Exception e){
+            return  new ResponseEntity<>("Retrieving orders by payment type failed!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("getByCategoryName")
     public List<Order> getOrderByPaymentType(@RequestParam String categoryName){

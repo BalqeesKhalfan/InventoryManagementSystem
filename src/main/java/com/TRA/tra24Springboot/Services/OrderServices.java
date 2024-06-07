@@ -116,8 +116,17 @@ public class OrderServices {
         }
     }
 
-    public List<Order> getOrderByPaymentType(PaymentType paymentType) {
-        return orderRepository.getOrderByPaymentType(paymentType);
+    public List<Order> getOrderByPaymentType(PaymentType paymentType) throws Exception {
+        try {
+            List<Order> orders = orderRepository.getOrderByPaymentType(paymentType);
+            if(orders.isEmpty()){
+                throw  new Exception("No Orders found with payment Type :"+paymentType);
+            }
+            return  orders;
+        }catch (Exception e){
+            throw  new Exception("Faild to retrieve orders by payment type"+e.getMessage(),e);
+        }
+
     }
 
 
