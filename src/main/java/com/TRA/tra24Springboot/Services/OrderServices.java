@@ -129,10 +129,17 @@ public class OrderServices {
 
     }
 
+    public List<Order> getOrderByCategoryName(String categoryName) throws Exception {
+        try {
+            List<Order> orders = orderRepository.getOrderByCategoryName(categoryName);
+            if(orders.isEmpty()){
+                throw  new Exception("No Orders found with payment Type :"+categoryName);
+            }
+            return  orders;
+        }catch (Exception e){
+            throw  new Exception("Faild to retrieve orders by category Name"+e.getMessage(),e);
+        }
 
-
-    public List<Order> getOrderByCategoryName(String categoryName) {
-        return orderRepository.getOrderByCategoryName(categoryName);
     }
 
     public List<Order>getOrderByIsActive(Boolean isActive) {

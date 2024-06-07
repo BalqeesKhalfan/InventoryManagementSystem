@@ -90,8 +90,14 @@ public class OrderController {
         }
     }
     @GetMapping("getByCategoryName")
-    public List<Order> getOrderByPaymentType(@RequestParam String categoryName){
-        return orderServices.getOrderByCategoryName(categoryName);
+    public ResponseEntity<?> getOrderByPaymentType(@RequestParam String categoryName){
+        try {
+            List<Order>orders =orderServices.getOrderByCategoryName(categoryName);
+            return  new ResponseEntity<>(orders,HttpStatus.OK);
+
+        }catch (Exception e){
+            return  new ResponseEntity<>("Retrieving orders by category Name failed!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("getByIsActive")
     public List<Order> getOrderByIsActive(@RequestParam Boolean isActive) {
