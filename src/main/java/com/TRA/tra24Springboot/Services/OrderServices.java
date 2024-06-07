@@ -142,7 +142,16 @@ public class OrderServices {
 
     }
 
-    public List<Order>getOrderByIsActive(Boolean isActive) {
-        return orderRepository.findByOrderByIsActive(isActive);
+    public List<Order>getOrderByIsActive(Boolean isActive) throws  Exception{
+        try {
+            List<Order> orders = orderRepository.findByOrderByIsActive(isActive);
+            if(orders.isEmpty()){
+                throw  new Exception("No orders found with isActive: " + isActive);
+            }
+            return  orders;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve orders With isActive : " + e.getMessage(), e);
+        }
+
     }
 }

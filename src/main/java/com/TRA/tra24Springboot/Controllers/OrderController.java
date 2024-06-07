@@ -100,8 +100,15 @@ public class OrderController {
         }
     }
     @GetMapping("getByIsActive")
-    public List<Order> getOrderByIsActive(@RequestParam Boolean isActive) {
-        return orderServices.getOrderByIsActive(isActive);
+    public ResponseEntity<?> getOrderByIsActive(@RequestParam Boolean isActive) {
+
+        try {
+            List<Order> orders= orderServices.getOrderByIsActive(isActive);
+            return  new ResponseEntity<>(orders,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving orders by isActive failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 
