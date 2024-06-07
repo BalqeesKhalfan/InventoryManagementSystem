@@ -104,8 +104,16 @@ public class OrderServices {
         }
 
     }
-    public List<Order> getOrderByPaymentStatus(PaymentStatus paymentStatus) {
-        return orderRepository.getOrderByPaymentStatus(paymentStatus);
+    public List<Order> getOrderByPaymentStatus(PaymentStatus paymentStatus) throws  Exception{
+        try {
+            List<Order> orders = orderRepository.getOrderByPaymentStatus(paymentStatus);
+            if (orders.isEmpty()){
+                throw  new Exception("No Order found with payment status :"+paymentStatus);
+            }
+            return orders;
+        }catch (Exception e){
+            throw  new Exception("Faild to retrieve orders by payment status "+e.getMessage(),e);
+        }
     }
 
     public List<Order> getOrderByPaymentType(PaymentType paymentType) {
