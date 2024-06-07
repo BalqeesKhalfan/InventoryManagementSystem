@@ -50,8 +50,15 @@ public class OrderController {
         }
    }
     @GetMapping("getById")
-    public Order getOrderById(@RequestParam Integer orderId){
-        return orderServices.getOrderById(orderId);
+    public ResponseEntity<?> getOrderById(@RequestParam Integer orderId){
+        try {
+            Order order = orderServices.getOrderById(orderId);
+            return  new ResponseEntity<>(order, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving order failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("getByStatus")
     public List<Order> getOrderByStatus(@RequestParam OrderStatus orderStatus){

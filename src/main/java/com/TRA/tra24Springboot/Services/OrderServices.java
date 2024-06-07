@@ -79,8 +79,16 @@ public class OrderServices {
             throw new Exception("Failed to retrieve Orders : " + e.getMessage(), e);
         }
     }
-    public Order getOrderById(Integer orderId){
-        return orderRepository.getOrderById(orderId);
+    public Order getOrderById(Integer orderId) throws  Exception{
+        try {
+            Order order = orderRepository.getOrderById(orderId);
+            if(order == null){
+                throw  new Exception("orderId with ID "+orderId+" is not found.");
+            }
+            return order;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve order: " + e.getMessage(), e);
+        }
 
     }
 
