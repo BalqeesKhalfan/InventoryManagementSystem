@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Services;
 
 
 import com.TRA.tra24Springboot.DTO.OrderDTO;
+import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,6 @@ public class OrderServices {
                 throw new Exception("Order with ID : "+orderId+" is not found.");
             }
             orderFromDb.setOrderDate(new Date());
-
             return orderRepository.save(orderFromDb);
         }catch (Exception e){
             throw new Exception("Failed to update order: " + e.getMessage(), e);
@@ -68,10 +68,16 @@ public class OrderServices {
         }
     }
 
-    public List<OrderDTO> getOrder(){
-        List <Order> orders = orderRepository.findAll();
-
-        return OrderDTO.convertToDTO(orders);
+    public List<OrderDTO> getOrder() throws  Exception{
+        try {
+            List <Order> orders = orderRepository.findAll();
+            if (orders.isEmpty()) {
+                throw new Exception("No order found");
+            }
+            return OrderDTO.convertToDTO(orders);
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve Orders : " + e.getMessage(), e);
+        }
     }
     public Order getOrderById(Integer orderId){
         return orderRepository.getOrderById(orderId);
