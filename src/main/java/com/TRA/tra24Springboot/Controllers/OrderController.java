@@ -61,8 +61,14 @@ public class OrderController {
 
     }
     @GetMapping("getByStatus")
-    public List<Order> getOrderByStatus(@RequestParam OrderStatus orderStatus){
-        return orderServices.getOrderByStatus(orderStatus);
+    public ResponseEntity<?>  getOrderByStatus(@RequestParam OrderStatus orderStatus){
+        try {
+            List<Order> orders= orderServices.getOrderByStatus(orderStatus);
+            return new ResponseEntity<>(orders, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>("Retrieving orders by status failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("getByPaymentStatus")
     public List<Order> getOrderByPaymentStatus(@RequestParam PaymentStatus paymentStatus){
