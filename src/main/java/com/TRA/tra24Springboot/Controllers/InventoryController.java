@@ -33,8 +33,13 @@ public class InventoryController {
         }
     }
     @PostMapping("write-off")
-    public Inventory writeOffInventory(@RequestParam Integer inventoryId) {
-        return inventoryServices.writeOffInventory(inventoryId);
+    public ResponseEntity<?> writeOffInventory(@RequestParam Integer inventoryId) {
+        try {
+            Inventory result = inventoryServices.writeOffInventory(inventoryId);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e ){
+            return  new ResponseEntity<>("Writting off inventory failed "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

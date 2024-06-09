@@ -82,13 +82,20 @@ public class InventoryServices {
     }
 
 
-    public Inventory writeOffInventory(Integer inventoryId) {
-        Inventory inventoryFromDb = inventoryRepository.getInventoryById(inventoryId);
-        inventoryFromDb.setIsActive(Boolean.FALSE);
-        inventoryFromDb.setUpdatedDate(new Date());
-        //inventoryItem.setWriteOffDate(new Date());
+    public Inventory writeOffInventory(Integer inventoryId) throws Exception {
+        try {
+            Inventory inventoryFromDb = inventoryRepository.getInventoryById(inventoryId);
+            if (inventoryFromDb == null) {
+                throw new Exception("Inventory with ID: " + inventoryId + " not found");
+            }
+            inventoryFromDb.setIsActive(Boolean.FALSE);
+            inventoryFromDb.setUpdatedDate(new Date());
+            //inventoryItem.setWriteOffDate(new Date());
 
-        return inventoryRepository.save(inventoryFromDb);
+            return inventoryRepository.save(inventoryFromDb);
+        }catch (Exception e) {
+            throw new Exception("Failed to write off inventory: " + e.getMessage(), e);
+        }
     }
     public List<InventoryDTO> getAll(){
         List<Inventory> inventories = inventoryRepository.findAll();
