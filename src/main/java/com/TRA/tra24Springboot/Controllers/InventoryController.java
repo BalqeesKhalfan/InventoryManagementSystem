@@ -111,8 +111,14 @@ public class InventoryController {
 
     }
     @GetMapping("getByAvailability")
-    public List<Inventory> getInventoryByAvailability(@RequestParam Boolean isActive){
-        return inventoryServices.getInventoryByIsActive(isActive);
+    public ResponseEntity<?> getInventoryByAvailability(@RequestParam Boolean isActive){
+        try {
+            List<Inventory> inventories= inventoryServices.getInventoryByIsActive(isActive);
+            return  new ResponseEntity<>(inventories,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving inventories by isActive failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("getByLocation")
     public List<Inventory> getInventoryByLocation(@RequestParam String location) {

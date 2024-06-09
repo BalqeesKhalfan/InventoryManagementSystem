@@ -121,8 +121,17 @@ public class InventoryServices {
             throw new Exception("Failed to retrieve order: " + e.getMessage(), e);
         }
     }
-    public List<Inventory>getInventoryByIsActive(Boolean isActive) {
-        return inventoryRepository.getInventoryByAvailability(isActive);
+    public List<Inventory>getInventoryByIsActive(Boolean isActive) throws  Exception {
+        try {
+            List<Inventory> inventories = inventoryRepository.getInventoryByAvailability(isActive);
+            if(inventories.isEmpty()){
+                throw  new Exception("No inventories found with isActive: " + isActive);
+            }
+            return  inventories;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve inventories With isActive : " + e.getMessage(), e);
+        }
+
     }
     public List<Inventory> getInventoryByLocation(String location){
         return inventoryRepository.getInventoryByLocation(location);
