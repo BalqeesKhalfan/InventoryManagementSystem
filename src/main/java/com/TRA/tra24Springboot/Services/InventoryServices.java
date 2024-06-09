@@ -145,8 +145,17 @@ public class InventoryServices {
         }
 
     }
-    public List<Inventory> getInventoryByAdminName(String admin){
-        return inventoryRepository.getInventoryByAdminName(admin);
+    public List<Inventory> getInventoryByAdminName(String admin) throws  Exception{
+        try {
+            List<Inventory> inventories = inventoryRepository.getInventoryByAdminName(admin);
+            if(inventories.isEmpty()){
+                throw  new Exception("No inventories found with admin: " + admin);
+            }
+            return  inventories;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve inventories With admin : " + e.getMessage(), e);
+        }
+
     }
 
 }

@@ -132,8 +132,14 @@ public class InventoryController {
     }
 
     @GetMapping("getByAdmin")
-    public List<Inventory> getInventoryByAdminName(@RequestParam String admin){
-        return inventoryServices.getInventoryByAdminName(admin);
+    public ResponseEntity<?> getInventoryByAdminName(@RequestParam String admin){
+        try {
+            List<Inventory> inventories=inventoryServices.getInventoryByAdminName(admin);
+            return  new ResponseEntity<>(inventories,HttpStatus.OK);
+        }catch (Exception e ){
+            return  new ResponseEntity<>("Retrieving inventories by admin failed!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
