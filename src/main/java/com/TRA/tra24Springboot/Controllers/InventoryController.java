@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Controllers;
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
+import com.TRA.tra24Springboot.Models.Order;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
@@ -99,8 +100,15 @@ public class InventoryController {
     }
 
     @GetMapping("getById")
-    public Inventory getInventoryById(@RequestParam Integer inventoryId){
-        return inventoryServices.getInventoryById(inventoryId);
+    public ResponseEntity<?> getInventoryById(@RequestParam Integer inventoryId){
+        try {
+            Inventory inventory = inventoryServices.getInventoryById(inventoryId);
+            return  new ResponseEntity<>(inventory, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>("Retrieving inventory failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("getByAvailability")
     public List<Inventory> getInventoryByAvailability(@RequestParam Boolean isActive){

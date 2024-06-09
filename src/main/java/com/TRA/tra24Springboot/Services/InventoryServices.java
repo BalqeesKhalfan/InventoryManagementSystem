@@ -110,8 +110,16 @@ public class InventoryServices {
         }
     }
 
-    public Inventory getInventoryById(Integer inventoryId){
-        return inventoryRepository.getInventoryById(inventoryId);
+    public Inventory getInventoryById(Integer inventoryId) throws  Exception{
+        try {
+            Inventory inventory =inventoryRepository.getInventoryById(inventoryId);
+            if(inventory == null){
+                throw  new Exception("inventory with ID "+inventoryId+" is not found.");
+            }
+            return inventory;
+        }catch (Exception e) {
+            throw new Exception("Failed to retrieve order: " + e.getMessage(), e);
+        }
     }
     public List<Inventory>getInventoryByIsActive(Boolean isActive) {
         return inventoryRepository.getInventoryByAvailability(isActive);
