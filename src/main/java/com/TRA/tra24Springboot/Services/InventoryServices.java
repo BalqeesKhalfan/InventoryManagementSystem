@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
+import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,11 +98,16 @@ public class InventoryServices {
             throw new Exception("Failed to write off inventory: " + e.getMessage(), e);
         }
     }
-    public List<InventoryDTO> getAll(){
-        List<Inventory> inventories = inventoryRepository.findAll();
-
-        return InventoryDTO.convertToDTO(inventories);
-
+    public List<InventoryDTO> getAll() throws  Exception{
+        try {
+            List<Inventory> inventories = inventoryRepository.findAll();
+            if(inventories.isEmpty()){
+                throw  new Exception("No inventory found ");
+            }
+            return  InventoryDTO.convertToDTO(inventories);
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve Orders : " + e.getMessage(), e);
+        }
     }
 
     public Inventory getInventoryById(Integer inventoryId){

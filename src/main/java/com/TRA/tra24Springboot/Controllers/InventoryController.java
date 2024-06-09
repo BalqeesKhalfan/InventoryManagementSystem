@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
+import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
@@ -87,8 +88,14 @@ public class InventoryController {
     }**/
 
     @GetMapping("getAll")
-    public List<InventoryDTO> getInventories(){
-        return inventoryServices.getAll();
+    public ResponseEntity<?>getInventories(){
+        try {
+            List<InventoryDTO> inventories = inventoryServices.getAll();
+            return  new ResponseEntity<>(inventories,HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>("Retrieving inventories failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("getById")
