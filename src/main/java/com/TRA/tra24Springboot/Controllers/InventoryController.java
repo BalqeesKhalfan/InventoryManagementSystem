@@ -121,8 +121,14 @@ public class InventoryController {
 
     }
     @GetMapping("getByLocation")
-    public List<Inventory> getInventoryByLocation(@RequestParam String location) {
-        return inventoryServices.getInventoryByLocation(location);
+    public ResponseEntity<?> getInventoryByLocation(@RequestParam String location) {
+        try {
+            List<Inventory> inventories=inventoryServices.getInventoryByLocation(location);
+            return  new ResponseEntity<>(inventories,HttpStatus.OK);
+        }catch (Exception e ){
+            return  new ResponseEntity<>("Retrieving inventories by location failed!"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("getByAdmin")

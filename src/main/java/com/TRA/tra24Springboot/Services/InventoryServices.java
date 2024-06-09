@@ -133,8 +133,17 @@ public class InventoryServices {
         }
 
     }
-    public List<Inventory> getInventoryByLocation(String location){
-        return inventoryRepository.getInventoryByLocation(location);
+    public List<Inventory> getInventoryByLocation(String location)throws  Exception{
+        try {
+            List<Inventory> inventories = inventoryRepository.getInventoryByLocation(location);
+            if(inventories.isEmpty()){
+                throw  new Exception("No inventories found with location: " + location);
+            }
+            return  inventories;
+        }catch (Exception e){
+            throw new Exception("Failed to retrieve inventories With location : " + e.getMessage(), e);
+        }
+
     }
     public List<Inventory> getInventoryByAdminName(String admin){
         return inventoryRepository.getInventoryByAdminName(admin);
