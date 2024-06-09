@@ -7,6 +7,7 @@ import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
 import com.TRA.tra24Springboot.Services.InventoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,14 @@ public class InventoryController {
     InventoryServices inventoryServices;
 
     @PostMapping("receive")
-    public Inventory receiveStock(@RequestBody Inventory inventoryItem) {
+    public ResponseEntity<?> receiveStock( Inventory inventoryItem) {
 
-        return inventoryServices.receiveStock(inventoryItem);
+        try {
+            Inventory result = inventoryServices.receiveStock(inventoryItem);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Receiving stock failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PostMapping("write-off")
     public Inventory writeOffInventory(@RequestParam Integer inventoryId) {
