@@ -35,10 +35,20 @@ public class OrderController {
 
     }
 
-    @PostMapping("/cancel/{orderId}")
-    public String cancelOrder(@PathVariable("orderId") Integer orderId,Order order) {
-        return orderServices.cancelOrder(orderId);
+    @PutMapping("cancel")
+    public <T> ResponseEntity<T> cancelOrder(@RequestParam Integer orderId) {
+        try {
+            String result = orderServices.cancelOrder(orderId);
+            return  (ResponseEntity<T>) new ResponseEntity<>(result,HttpStatus.OK);
+        }catch (Exception e){
+            return (ResponseEntity<T>) new ResponseEntity<>("Cancelletion faild "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
+
+
+    //method to cancel order
+
 
    @GetMapping("getOrder")
    public ResponseEntity<?>  getOrder(){

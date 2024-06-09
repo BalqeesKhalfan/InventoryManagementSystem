@@ -52,7 +52,6 @@ public class OrderServices {
 
     public String cancelOrder(@PathVariable("orderId") Integer orderId) {
         Order orderFromDb = orderRepository.getOrderById(orderId);
-        // Check if order exists and is cancellable
         if (orderFromDb != null && orderFromDb.getStatus() == OrderStatus.IN_PROGRESS) {
             // Update order status to cancel
             orderFromDb.setStatus(OrderStatus.CANCELED);
@@ -67,6 +66,8 @@ public class OrderServices {
             return "Unable to cancel order. Order may not exist or may not be cancelable.";
         }
     }
+
+
 
     public List<OrderDTO> getOrder() throws  Exception{
         try {
