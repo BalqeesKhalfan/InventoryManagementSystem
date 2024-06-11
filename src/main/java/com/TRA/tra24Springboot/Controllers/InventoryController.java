@@ -132,6 +132,7 @@ public class InventoryController {
     }
 
     @GetMapping("getByAdmin")
+    
     public ResponseEntity<?> getInventoryByAdminName(@RequestParam String admin){
         try {
             List<Inventory> inventories=inventoryServices.getInventoryByAdminName(admin);
