@@ -6,6 +6,7 @@ import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import com.TRA.tra24Springboot.Services.OrderServices;
+import com.TRA.tra24Springboot.Services.SlackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,11 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderServices orderServices;
+    @Autowired
+    SlackService slackService;
     @PostMapping("create")
     public Order createOrder(@RequestBody Order order) {
+        slackService.sendMessage("Balqees","Order has been Added");
         return orderServices.createOrder(order);
     }
     @PutMapping("update")
