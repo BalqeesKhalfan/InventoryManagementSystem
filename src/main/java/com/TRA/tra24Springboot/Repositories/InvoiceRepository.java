@@ -21,5 +21,7 @@ public interface InvoiceRepository  extends JpaRepository<Invoice,Integer> {
     @Query("SELECT v FROM Invoice v WHERE v.dueDate BETWEEN :startDate AND :endDate")
     public List<Invoice> getInvoicesByDueDateBetween(@Param("startDate") Date startDate,
                                                      @Param("endDate") Date endDate);
+    @Query("SELECT v FROM Invoice v WHERE v.dueDate < :today")
+    public List<Invoice> getOverdueInvoices(@Param("today") Date today);
 
 }
