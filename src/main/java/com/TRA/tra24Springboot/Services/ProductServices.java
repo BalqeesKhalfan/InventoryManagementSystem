@@ -9,6 +9,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,45 +21,47 @@ public class ProductServices {
     @Autowired
     ProductDetailsServices productDetailsServices;
 
-    public Product addProduct(Product product){
+    public Product addProduct(Product product) {
 
 
         ProductDetails productDetails = productDetailsServices.addProductDetails(product.getProductDetails());
         /**ProductDetails productDetails = productDetailsServices.addProductDetails(product.getProductDetails());
-       **/
+         **/
         product.setProductDetails(productDetails);
         product.setSku(UUID.randomUUID());
         product.setCategory("Electronics Devices ");
-         product.setQuantity(78);
+        product.setQuantity(78);
         product.setIsActive(Boolean.TRUE);
         product.setCreatedDate(new Date());
 
         return productRepository.save(product);
 
     }
-    public String deleteProduct(String productName){
-          Product productFromDb = productRepository.getByProductName(productName);
-          productFromDb.setIsActive(Boolean.FALSE);
-          productRepository.save(productFromDb);
+
+    public String deleteProduct(String productName) {
+        Product productFromDb = productRepository.getByProductName(productName);
+        productFromDb.setIsActive(Boolean.FALSE);
+        productRepository.save(productFromDb);
         return "Success";
     }
-    public String deleteProductById(Integer productId) throws Exception{
-       try {
-           Product product =productRepository.getProductById(productId);
-           if (product == null){
-               throw new Exception("Product With ID : "+ productId + "is not found");
-           }
-           product.setIsActive(Boolean.FALSE);
-           System.out.println(product.toString());
-           productRepository.save(product);
-           return "Product Deleted Successfully";
 
-       }catch (Exception e){
-           throw  new Exception("Failed to delete Product : "+ e.getMessage());
-       }
+    public String deleteProductById(Integer productId) throws Exception {
+        try {
+            Product product = productRepository.getProductById(productId);
+            if (product == null) {
+                throw new Exception("Product With ID : " + productId + "is not found");
+            }
+            product.setIsActive(Boolean.FALSE);
+            System.out.println(product.toString());
+            productRepository.save(product);
+            return "Product Deleted Successfully";
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete Product : " + e.getMessage());
+        }
     }
 
-    public String updateProductQuantity(Integer productId, Integer quantity) throws Exception{
+    public String updateProductQuantity(Integer productId, Integer quantity) throws Exception {
         try {
             Product productFromDb = productRepository.getProductById(productId);
             if (productFromDb == null) {
@@ -74,8 +77,8 @@ public class ProductServices {
             throw new Exception("Failed to update product quantity: " + e.getMessage(), e);
         }
     }
-    public Product updateProduct(Product product)
-    {
+
+    public Product updateProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -90,29 +93,32 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products: " + e.getMessage(), e);
         }
     }
-   public Product getProductById(Integer productId)throws Exception {
-       try {
-           Product product = productRepository.getProductById(productId);
-           if (product == null) {
-               throw new Exception("Product with ID: " + productId + " is not found.");
-           }
-           return product;
-       } catch (Exception e) {
-           throw new Exception("Failed to retrieve product: " + e.getMessage(), e);
-       }
-   }
-   public List<Product> getProductsByName(String productName)  throws Exception{
-       try {
-           List<Product> products = productRepository.findByProductName(productName);
-           if (products.isEmpty()) {
-               throw new Exception("No products found with name: " + productName);
-           }
-           return products;
-       } catch (Exception e) {
-           throw new Exception("Failed to retrieve products by name: " + e.getMessage(), e);
-       }
-   }
-    public List<Product> getProductsByColor(String color) throws Exception{
+
+    public Product getProductById(Integer productId) throws Exception {
+        try {
+            Product product = productRepository.getProductById(productId);
+            if (product == null) {
+                throw new Exception("Product with ID: " + productId + " is not found.");
+            }
+            return product;
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve product: " + e.getMessage(), e);
+        }
+    }
+
+    public List<Product> getProductsByName(String productName) throws Exception {
+        try {
+            List<Product> products = productRepository.findByProductName(productName);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with name: " + productName);
+            }
+            return products;
+        } catch (Exception e) {
+            throw new Exception("Failed to retrieve products by name: " + e.getMessage(), e);
+        }
+    }
+
+    public List<Product> getProductsByColor(String color) throws Exception {
 
         try {
             List<Product> products = productRepository.findByProductcolor(color);
@@ -121,7 +127,7 @@ public class ProductServices {
             }
             return products;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With color: " + e.getMessage(), e);
         }
 
@@ -130,64 +136,97 @@ public class ProductServices {
     public List<Product> getProductsByPrice(Double price) throws Exception {
         try {
             List<Product> products = productRepository.findByProductPrice(price);
-            if(products.isEmpty()){
-                throw  new Exception("No products found with price: " + price);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with price: " + price);
             }
-            return  products;
-        }catch (Exception e){
+            return products;
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With price: " + e.getMessage(), e);
         }
 
     }
-    public List<Product>getProductByCountry(String country)  throws  Exception{
+
+    public List<Product> getProductByCountry(String country) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByCountry(country);
-            if(products.isEmpty()){
-                throw  new Exception("No products found with country: " + country);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with country: " + country);
             }
-            return  products;
+            return products;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With country: " + e.getMessage(), e);
         }
 
     }
-    public List<Product>getProductBySize(String size) throws  Exception {
+
+    public List<Product> getProductBySize(String size) throws Exception {
         try {
             List<Product> products = productRepository.findByProductBySize(size);
-            if(products.isEmpty()){
-                throw  new Exception("No products found with Size: " + size);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with Size: " + size);
             }
-            return  products;
+            return products;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With size : " + e.getMessage(), e);
         }
     }
-    public List<Product>getProductByCategory(String category) throws  Exception {
+
+    public List<Product> getProductByCategory(String category) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByCategory(category);
-            if(products.isEmpty()){
-                throw  new Exception("No products found with category: " + category);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with category: " + category);
             }
-            return  products;
+            return products;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With category : " + e.getMessage(), e);
         }
     }
-    public List<Product>getProductByIsActive(Boolean isActive) throws  Exception{
+
+    public List<Product> getProductByIsActive(Boolean isActive) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByIsActive(isActive);
-            if(products.isEmpty()){
-                throw  new Exception("No products found with isActive: " + isActive);
+            if (products.isEmpty()) {
+                throw new Exception("No products found with isActive: " + isActive);
             }
-            return  products;
+            return products;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Failed to retrieve products With isActive : " + e.getMessage(), e);
 
         }
 
+    }
+
+    /**
+     * public List<Product> getLowStockProducts() {
+     * List<Product> products = productRepository.findAll();
+     * List<Product> lowStockProducts = new ArrayList<>();
+     * for (Product product : products) {
+     * if (product.getQuantity() < 50) {
+     * lowStockProducts.add(product);
+     * }
+     * }
+     * return lowStockProducts;
+     * }
+     **/
+    public List<Product> getProductByQuantity(Integer quantity) {
+        return productRepository.getProductByQuantity(quantity);
+    }
+
+    public List<Product> getLowStockProducts() {
+        List<Product> products = productRepository.findAll();
+        List<Product> lowStockProducts = new ArrayList<>();
+        for (Product product : products) {
+            if (product != null && product.getQuantity() != null) {
+                if (product.getQuantity() < 5) {
+                    lowStockProducts.add(product);
+                }
+            }
+        }
+        return lowStockProducts;
     }
 }
