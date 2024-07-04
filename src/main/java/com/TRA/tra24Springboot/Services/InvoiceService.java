@@ -26,6 +26,7 @@ public class InvoiceService {
         invoice.setProductList(Arrays.asList(products));
         invoice.setPaidAmount(788.5);
         invoice.setTotalAmount(998.0);
+        invoice.setPaymentDate(new Date());
         invoice.setIsActive(Boolean.TRUE);
         invoice.setCreatedDate(new Date());
 
@@ -47,6 +48,15 @@ public class InvoiceService {
         Date today = new Date();
         return invoiceRepository.getOverdueInvoices(today);
     }
+    //method to
+    public List<Invoice> getInvoicesCreatedBetween(Date startDate, Date endDate) {
+        return invoiceRepository.getInvoicesCreatedBetween(startDate, endDate);
+    }
+
+    public List<Invoice> getPaidInvoicesBetween(Date startDate, Date endDate) {
+        return invoiceRepository.getPaidInvoicesBetween(startDate, endDate);
+    }
+
 
     public  Invoice  getInvoiceById(Integer id){
         return invoiceRepository.getInvoiceById(id);
