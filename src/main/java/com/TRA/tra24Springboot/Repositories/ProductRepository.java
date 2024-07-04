@@ -34,6 +34,7 @@ public interface ProductRepository extends JpaRepository <Product,Integer> {
 
    /** @Query("SELECT p from Product p WHERE p.productDetails.productName =:productName")
     ProductDTO getBYProduct(@Param("productName") String productName);**/
-
+   @Query("SELECT p FROM Product p WHERE p.quantity =:quantity")
+   List<Product> getProductByQuantity(@Param("quantity") Integer quantity);
 
 }
