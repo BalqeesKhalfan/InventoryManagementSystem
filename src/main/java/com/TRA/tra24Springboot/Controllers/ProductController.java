@@ -5,9 +5,11 @@ import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.MailingService;
 import com.TRA.tra24Springboot.Services.ProductServices;
+import com.TRA.tra24Springboot.Services.SlackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class ProductController {
 
     @Autowired
     MailingService mailingService;
+    @Autowired
+    SlackService slackService;
 
     @PostMapping("add")
     public Product addProduct(@RequestBody Product product) {
@@ -156,5 +160,31 @@ public class ProductController {
             return new ResponseEntity<>("Retrieving products by isActive failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   /** @GetMapping("/checkStock")
+    public List<Product> getLowStockReport() {
+        List<Product> lowStockProducts = productServices.getLowStockProducts();
+        if (!lowStockProducts.isEmpty()) {
+            slackService.sendMessage("practice", "Low stock alert: " + lowStockProducts.size() + " products with low stock.");
+        }
+        return lowStockProducts;
+    }**/
+   @Scheduled(cron = "0 9/6 * * *")
+   @GetMapping("lowStock")
+   public List<Product> lowStockCheck() {
+       List<Product> lowStockProducts = productServices.getLowStockProducts();
+       if (!lowStockProducts.isEmpty()) {
+           StringBuilder messageBuilder = new StringBuilder();
+           messageBuilder.append("-------------------------\nLow stock alert:\n-------------------------\n");
+           for (Product product : lowStockProducts) {
+               messageBuilder.append("Product ID: ").append(product.getId())
+                       .append(" | Product Name: ").append(product.getProductDetails().getName())
+                       .append(" | Quantity: ").append(product.getQuantity())
+                       .append("\n------------------------------------------------------------\n");
+           }
+           slackService.sendMessage("balqees", messageBuilder.toString());
+       }
+       return lowStockProducts;
+   }
 }
+
+
