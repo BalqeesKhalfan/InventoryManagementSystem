@@ -16,5 +16,6 @@ public class Invoice extends  BaseEntity{
     Double paidAmount;
     Double balance;
     Date dueDate;
+    Date paymentDate;
 
 }
