@@ -4,10 +4,12 @@ import com.TRA.tra24Springboot.Models.Invoice;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.InvoiceService;
 import com.TRA.tra24Springboot.Services.SlackService;
+import com.TRA.tra24Springboot.Utils.DateHelperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,39 @@ public class InvoiceController {
             slackService.sendMessage("balqees", message.toString());
         }
     }
+    @Scheduled(cron = "0 0 9 * * 0") //runs every Sunday
+    @PostMapping("weeklyReport")
+    public void weeklyInvoiceReport(){
+        Date today = new Date();
+        Date startDate = DateHelperUtils.subtractDays(today, 6); //during the last 7 days
+
+        List<Invoice> createdInvoices = invoiceService.getInvoicesCreatedBetween(startDate, today);
+        List<Invoice> paidInvoices = invoiceService.getPaidInvoicesBetween(startDate, today);
+        List<Invoice> overdueInvoices = invoiceService.getOverDueInvoices();
+
+        StringBuilder report = new StringBuilder();
+        report.append("Weekly Summary Report:\n")
+                .append("Invoices Created:\n");
+        appendInvoicesToReport(report, createdInvoices);
+        report.append("\nInvoices Paid:\n");
+        appendInvoicesToReport(report, paidInvoices);
+        report.append("\nOverdue Invoices:\n");
+        appendInvoicesToReport(report, overdueInvoices);
+
+        slackService.sendMessage("balqees", report.toString());
+    }
+
+    private void appendInvoicesToReport(StringBuilder report, List<Invoice> invoices){
+        for (Invoice invoice : invoices) {
+            report.append("Invoice #")
+                    .append(invoice.getId())
+                    .append(" - Due on ")
+                    .append(invoice.getDueDate().toString())
+                    .append("\n");
+        }
+    }
+    
+
 }
 
 
