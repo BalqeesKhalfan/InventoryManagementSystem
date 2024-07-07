@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +84,38 @@ public class InvoiceController {
                     .append("\n");
         }
     }
-    
+    @Scheduled(cron = "0 0 9 1 * ?") //runs on the first day of every month at 9:00 AM
+    @PostMapping("monthlyReport")
+    public void monthlyInvoiceReport(){
+
+        //calculating start and end dates for the current month
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1); //setting to the first day of the month
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.MONTH, 1); //moving to the next month
+        calendar.add(Calendar.DAY_OF_MONTH, -1); //setting to the last day of the current month
+        Date endDate = calendar.getTime();
+
+        List<Invoice> createdInvoices = invoiceService.getInvoicesCreatedBetween(startDate, endDate);
+        List<Invoice> paidInvoices = invoiceService.getPaidInvoicesBetween(startDate, endDate);
+        List<Invoice> overdueInvoices = invoiceService.getOverDueInvoices();
+
+        StringBuilder report = new StringBuilder();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
+        report.append("Monthly Invoices Report - ")
+                .append(dateFormat.format(startDate))
+                .append(":\n")
+                .append("Invoices Created:\n");
+        appendInvoicesToReport(report, createdInvoices);
+        report.append("\nInvoices Paid:\n");
+        appendInvoicesToReport(report, paidInvoices);
+        report.append("\nOverdue Invoices:\n");
+        appendInvoicesToReport(report, overdueInvoices);
+
+        slackService.sendMessage("balqees", report.toString());
+    }
+
 
 }
 
