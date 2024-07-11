@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
@@ -36,6 +37,8 @@ class ProductRepositoryTest {
                 .description("Educational Institution")
 
                 .build();
+        details1.setCreatedDate(new Date());
+        details1.setIsActive(Boolean.TRUE);
         productDetailsRepository.save(details1);
 
         ProductDetails details2 = ProductDetails.builder()
@@ -45,9 +48,12 @@ class ProductRepositoryTest {
                 .countryOfOrigin("Oman")
                 .size("Medium")
                 .expiryDate(new Date())
+
                 .description("Business Center")
 
                 .build();
+        details2.setCreatedDate(new Date());
+        details2.setIsActive(Boolean.TRUE);
         productDetailsRepository.save(details2);
         Product product1 = Product.builder()
 
@@ -57,6 +63,8 @@ class ProductRepositoryTest {
                 .sku(UUID.randomUUID())
 
                 .build();
+        product1.setIsActive(Boolean.TRUE);
+        product1.setCreatedDate(new Date());
         productRepository.save(product1);
 
         Product product2 = Product.builder()
@@ -65,8 +73,11 @@ class ProductRepositoryTest {
                 .quantity(200)
                 .category("Business")
                 .sku(UUID.randomUUID())
+
                 .build();
 
+        product2.setIsActive(Boolean.TRUE);
+        product2.setCreatedDate(new Date());
         productRepository.save(product2);
     }
 
@@ -138,6 +149,10 @@ class ProductRepositoryTest {
 
     @Test
     void findByProductByIsActive() {
+        List<Product> productsAvailability = productRepository.findByProductByIsActive(Boolean.TRUE);
+        assertThat(productsAvailability).isNotNull();
+        assertThat(productsAvailability.size()).isEqualTo(2);
+        assertThat(productsAvailability.get(0).getIsActive()).isEqualTo(Boolean.TRUE);
     }
 
     @Test
