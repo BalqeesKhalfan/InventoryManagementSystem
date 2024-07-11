@@ -4,8 +4,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
-import lombok.Generated;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -26,4 +26,7 @@ public class BaseEntity {
     Date updatedDate;
 
     Boolean isActive;
+
+    
+
 }
