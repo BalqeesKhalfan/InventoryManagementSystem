@@ -4,14 +4,12 @@ import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class InventoryServices {
@@ -25,22 +23,27 @@ public class InventoryServices {
     ProductRepository productRepository;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    SlackService slackService;
     public Inventory receiveStock( Inventory inventoryItem) throws  Exception {
         try {
-            ProductDetails productDetails = new ProductDetails();
-            productDetails.setName("Laptop");
-            productDetails.setColor("Black");
-            productDetails.setPrice(350d);
-            productDetails.setCountryOfOrigin("USA");
+            ProductDetails productDetails = ProductDetails.builder()
+                    .name("Laptop")
+                    .color("Black")
+                    .price(350d)
+                    .countryOfOrigin("USA").build();
+            productDetails.setIsActive(Boolean.TRUE);
+            productDetails.setExpiryDate(new Date());
             productDetails.setCreatedDate(new Date());
+
+
+
             productDetails = productDetailsRepository.save(productDetails);
 
-            Product product = new Product();
-            product.setProductDetails(productDetails);
-            product.setSku(UUID.randomUUID());
-            product.setQuantity(100);
-            product.setIsActive(Boolean.TRUE);
-            product.setCreatedDate(new Date());
+            Product product =  Product.builder().sku(UUID.randomUUID()).quantity(100).build();
+                              product.setIsActive(Boolean.TRUE);
+
+                             product.setCreatedDate(new Date());
 
             product = productRepository.save(product);
 
@@ -157,5 +160,7 @@ public class InventoryServices {
         }
 
     }
+
+
 
 }
