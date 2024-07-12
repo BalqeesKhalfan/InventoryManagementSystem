@@ -126,6 +126,10 @@ class SupplierRepositoryTest {
 
     @Test
     void findBySupplierByShippingMethods() {
+        List<Supplier> suppliers = supplierRepository.findBySupplierByShippingMethods("Air");
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+        assertThat(suppliers.get(0).getShippingMethods()).isEqualTo("Air");
     }
 
     @Test
