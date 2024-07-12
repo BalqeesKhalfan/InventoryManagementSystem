@@ -134,5 +134,9 @@ class SupplierRepositoryTest {
 
     @Test
     void getSupplierByPaymentMethod() {
+        List<Supplier> suppliers = supplierRepository.getSupplierByPaymentMethod(PaymentType.BANK_TRANSFER);
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+        assertThat(suppliers.get(0).getPaymentMethods()).isEqualTo(PaymentType.BANK_TRANSFER);
     }
 }
