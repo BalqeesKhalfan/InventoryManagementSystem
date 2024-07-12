@@ -84,6 +84,7 @@ class OrderRepositoryTest {
         List<Order> orders = orderRepository.getOrderByPaymentStatus(PaymentStatus.PAID);
         assertThat(orders).isNotNull();
         assertThat(orders.size()).isGreaterThan(0);
+        
         assertThat(orders.get(0).getPaymentStatus()).isEqualTo(PaymentStatus.PAID);
     }
 
