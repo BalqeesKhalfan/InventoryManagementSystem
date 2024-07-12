@@ -99,6 +99,10 @@ class SupplierRepositoryTest {
 
     @Test
     void getSupplierByCountry() {
+        List<Supplier> suppliers = supplierRepository.getSupplierByCountry("Oman");
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+        assertThat(suppliers.get(0).getCompanyName()).isEqualTo("OXY");
     }
 
     @Test
