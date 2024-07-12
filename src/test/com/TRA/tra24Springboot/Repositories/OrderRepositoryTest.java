@@ -84,12 +84,17 @@ class OrderRepositoryTest {
         List<Order> orders = orderRepository.getOrderByPaymentStatus(PaymentStatus.PAID);
         assertThat(orders).isNotNull();
         assertThat(orders.size()).isGreaterThan(0);
-        
+
         assertThat(orders.get(0).getPaymentStatus()).isEqualTo(PaymentStatus.PAID);
     }
 
     @Test
     void getOrderByPaymentType() {
+        List<Order> orders = orderRepository.getOrderByPaymentType(PaymentType.BANK_TRANSFER);
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isGreaterThan(0);
+        assertThat(orders.get(0).getPaymentType()).isEqualTo(PaymentType.BANK_TRANSFER);
+
     }
 
     @Test
