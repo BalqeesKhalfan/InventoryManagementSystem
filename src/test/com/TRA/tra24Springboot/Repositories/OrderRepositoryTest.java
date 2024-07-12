@@ -68,12 +68,14 @@ class OrderRepositoryTest {
 
     }
 
-    @Test
-    void getOrderById() {
-    }
+
 
     @Test
     void getOrderByStatus() {
+        List<Order> orders = orderRepository.getOrderByStatus(OrderStatus.COMPLETED);
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isGreaterThan(0);
+        assertThat(orders.get(0).getStatus()).isEqualTo(OrderStatus.COMPLETED);
 
     }
 
@@ -95,5 +97,6 @@ class OrderRepositoryTest {
 
     @Test
     void findByOrderByIsActive() {
+
     }
 }
