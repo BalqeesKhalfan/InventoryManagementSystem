@@ -79,7 +79,10 @@ class SupplierRepositoryTest {
                 .paymentMethods(PaymentType.BANK_TRANSFER)
                 .shippingMethods("Air")
                 .minimumOrderQuantity(10)
+
                 .build();
+        supplier.setIsActive(Boolean.TRUE);
+
         supplierRepository.save(supplier);
 
     }
@@ -115,6 +118,10 @@ class SupplierRepositoryTest {
 
     @Test
     void findBySupplierByIsActive() {
+        List<Supplier> suppliers = supplierRepository.findBySupplierByIsActive(true);
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+        assertThat(suppliers.get(0).getIsActive()).isTrue();
     }
 
     @Test
