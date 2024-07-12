@@ -107,6 +107,10 @@ class SupplierRepositoryTest {
 
     @Test
     void getSupplierByMinimumOrderQuantity() {
+        List<Supplier> suppliers = supplierRepository.getSupplierByMinimumOrderQuantity(10);
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+        assertThat(suppliers.get(0).getMinimumOrderQuantity()).isEqualTo(10);
     }
 
     @Test
