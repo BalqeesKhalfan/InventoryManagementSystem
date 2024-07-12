@@ -107,6 +107,10 @@ class OrderRepositoryTest {
 
     @Test
     void findByOrderByIsActive() {
+        List<Order> orders = orderRepository.findByOrderByIsActive(true);
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isGreaterThan(0);
+        assertThat(orders.get(0).getIsActive()).isTrue();
 
     }
 }
