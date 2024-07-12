@@ -72,13 +72,10 @@ class OrderRepositoryTest {
     void getOrderById() {
     }
 
-  /**  @Test
+    @Test
     void getOrderByStatus() {
-        List<Order> orderCategory = orderRepository.getOrderByCategoryName("Electronics");
-        assertThat(orderCategory).isNotNull();
-        assertThat(orderCategory.size()).isEqualTo(1);
-        assertThat(orderCategory.get(0).getCategoryName()).isEqualTo("Electronics");
-    }**/
+
+    }
 
     @Test
     void getOrderByPaymentStatus() {
@@ -90,6 +87,10 @@ class OrderRepositoryTest {
 
     @Test
     void getOrderByCategoryName() {
+        List<Order> orderCategory = orderRepository.getOrderByCategoryName("Electronics");
+        assertThat(orderCategory).isNotNull();
+        assertThat(orderCategory.size()).isEqualTo(1);
+        assertThat(orderCategory.get(0).getCategoryName()).isEqualTo("Electronics");
     }
 
     @Test
