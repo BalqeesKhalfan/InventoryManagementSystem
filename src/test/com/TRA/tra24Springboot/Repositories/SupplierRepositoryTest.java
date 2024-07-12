@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Date;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
@@ -69,8 +70,8 @@ class SupplierRepositoryTest {
         productRepository.save(product2);
 
         Supplier supplier = Supplier.builder()
-                .companyName("Supplier1")
-                .country("Country1")
+                .companyName("OXY")
+                .country("Oman")
                 .contactDetails(contactDetails)
                 .productsOffered(List.of(product1, product2))
                 .nextDeliveryTime(new Date())
@@ -83,12 +84,17 @@ class SupplierRepositoryTest {
 
     }
 
-    @Test
-    void getSupplierById() {
-    }
+
 
     @Test
     void getSupplierByCompanyName() {
+        List<Supplier> suppliers = supplierRepository.getSupplierByCompanyName("OXY");
+        assertThat(suppliers).isNotNull();
+        assertThat(suppliers.size()).isGreaterThan(0);
+
+        Supplier supplier = suppliers.get(0);
+        assertThat(supplier.getCompanyName()).isEqualTo("OXY");
+        assertThat(supplier.getCountry()).isEqualTo("Oman");
     }
 
     @Test
