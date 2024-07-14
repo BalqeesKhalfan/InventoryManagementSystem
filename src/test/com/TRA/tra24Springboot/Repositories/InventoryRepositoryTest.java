@@ -63,17 +63,7 @@ class InventoryRepositoryTest {
                 .postalCode("12345")
                 .build();
         contactDetailsRepository.save(contactDetails);
-        /**Supplier supplier = Supplier.builder()
-                .companyName("TechSupplier")
-                .country("Japan")
-                .contactDetails(ContactDetails.builder()
-                        .email("contact@techsupplier.com")
-                        .phoneNumber("123-456-7890")
-                        .build())
-                .build();
-        supplier.setIsActive(Boolean.TRUE);
-        supplier.setCreatedDate(new Date());
-        supplierRepository.save(supplier);**/
+
         Supplier supplier = Supplier.builder()
                 .companyName("OXY")
                 .country("Oman")
@@ -116,13 +106,13 @@ class InventoryRepositoryTest {
         assertThat(inventories.get(0).getIsActive()).isTrue();
     }*/
 
-    /**@Test
+    @Test
     void getInventoryByLocation() {
         List<Inventory> inventories = inventoryRepository.getInventoryByLocation("Oman");
         assertThat(inventories).isNotNull();
         assertThat(inventories.size()).isEqualTo(1);
         assertThat(inventories.get(0).getLocation()).isEqualTo("Oman");
-    }**/
+    }
 
     @Test
     void getInventoryByAdminName() {
