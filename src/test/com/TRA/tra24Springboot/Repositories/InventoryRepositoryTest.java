@@ -83,7 +83,7 @@ class InventoryRepositoryTest {
         Inventory inventory = Inventory.builder()
                 .products(List.of(product))
                 .location("Oman")
-                .admin("Admin Name")
+                .admin("Ahmed")
                 .supplier(List.of(supplier))
                 .phoneNumber("123-456-7890")
                 .openingHours("09:00")
@@ -117,5 +117,9 @@ class InventoryRepositoryTest {
 
     @Test
     void getInventoryByAdminName() {
+        List<Inventory> inventories = inventoryRepository.getInventoryByAdminName("Ahmed");
+        assertThat(inventories).isNotNull();
+        assertThat(inventories.size()).isEqualTo(1);
+        assertThat(inventories.get(0).getAdmin()).isEqualTo("Ahmed");
     }
 }
