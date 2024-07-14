@@ -13,7 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -27,6 +28,8 @@ class InventoryRepositoryTest {
     @Autowired
     ProductDetailsRepository productDetailsRepository;
 
+    @Autowired
+    ContactDetailsRepository contactDetailsRepository;
     @BeforeEach
     void  setupInventory() {
         ProductDetails productDetails = ProductDetails.builder()
@@ -41,18 +44,26 @@ class InventoryRepositoryTest {
         productDetails.setCreatedDate(new Date());
         productDetails.setIsActive(Boolean.TRUE);
         productDetailsRepository.save(productDetails);
+
         Product product = Product.builder()
                 .productDetails(productDetails)
                 .category("Electronics")
                 .quantity(50)
                 .sku(UUID.randomUUID())
-
                 .build();
         product.setCreatedDate(new Date());
-
+        product.setIsActive(Boolean.TRUE);
         productRepository.save(product);
 
-        Supplier supplier = Supplier.builder()
+        ContactDetails contactDetails = ContactDetails.builder()
+                .email("supplier@xyz.com")
+                .phoneNumber("99660889")
+                .faxNumber("987654321")
+                .address("123 Supplier Street")
+                .postalCode("12345")
+                .build();
+        contactDetailsRepository.save(contactDetails);
+        /**Supplier supplier = Supplier.builder()
                 .companyName("TechSupplier")
                 .country("Japan")
                 .contactDetails(ContactDetails.builder()
@@ -60,16 +71,34 @@ class InventoryRepositoryTest {
                         .phoneNumber("123-456-7890")
                         .build())
                 .build();
+        supplier.setIsActive(Boolean.TRUE);
+        supplier.setCreatedDate(new Date());
+        supplierRepository.save(supplier);**/
+        Supplier supplier = Supplier.builder()
+                .companyName("OXY")
+                .country("Oman")
+                .contactDetails(contactDetails)
+                .productsOffered(List.of(product))
+                .nextDeliveryTime(new Date())
+                .complaints("No complaints")
+                .paymentMethods(PaymentType.BANK_TRANSFER)
+                .shippingMethods("Air")
+                .minimumOrderQuantity(10)
+
+                .build();
+        supplier.setIsActive(Boolean.TRUE);
+
         supplierRepository.save(supplier);
 
         Inventory inventory = Inventory.builder()
                 .products(List.of(product))
-                .location("Warehouse 1")
+                .location("Oman")
                 .admin("Admin Name")
                 .supplier(List.of(supplier))
                 .phoneNumber("123-456-7890")
                 .openingHours("09:00")
                 .closingHours("17:00")
+
                 .build();
         inventory.setIsActive(Boolean.TRUE);
         inventory.setCreatedDate(new Date());
@@ -79,13 +108,21 @@ class InventoryRepositoryTest {
     void getInventoryById() {
     }
 
-    @Test
+   /* @Test
     void getInventoryByAvailability() {
-    }
+        List<Inventory> inventories = inventoryRepository.getInventoryByAvailability(Boolean.TRUE);
+        assertThat(inventories).isNotNull();
+        assertThat(inventories.size()).isGreaterThan(0);
+        assertThat(inventories.get(0).getIsActive()).isTrue();
+    }*/
 
-    @Test
+    /**@Test
     void getInventoryByLocation() {
-    }
+        List<Inventory> inventories = inventoryRepository.getInventoryByLocation("Oman");
+        assertThat(inventories).isNotNull();
+        assertThat(inventories.size()).isEqualTo(1);
+        assertThat(inventories.get(0).getLocation()).isEqualTo("Oman");
+    }**/
 
     @Test
     void getInventoryByAdminName() {
