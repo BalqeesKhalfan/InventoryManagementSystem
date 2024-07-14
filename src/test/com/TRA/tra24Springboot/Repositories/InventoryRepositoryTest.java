@@ -98,13 +98,14 @@ class InventoryRepositoryTest {
     void getInventoryById() {
     }
 
-   /* @Test
+   @Test
     void getInventoryByAvailability() {
-        List<Inventory> inventories = inventoryRepository.getInventoryByAvailability(Boolean.TRUE);
-        assertThat(inventories).isNotNull();
-        assertThat(inventories.size()).isGreaterThan(0);
-        assertThat(inventories.get(0).getIsActive()).isTrue();
-    }*/
+       List<Inventory> inventories = inventoryRepository.getInventoryByAvailability(true);
+       assertThat(inventories).isNotNull();
+       assertThat(inventories.size()).isGreaterThan(0);
+       assertThat(inventories.get(0).getIsActive()).isTrue();
+   }
+
 
     @Test
     void getInventoryByLocation() {
