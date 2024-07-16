@@ -32,7 +32,7 @@ class InvoiceRepositoryTest {
     @Autowired
     InvoiceRepository invoiceRepository;
     private final Date date = new Date();
-    private  Date dueDate= DateHelperUtils.addDays(date,1);
+    private final Date dueDate= DateHelperUtils.addDays(date,1);
 
     @BeforeEach
     void setupInvoice() {
@@ -128,19 +128,15 @@ class InvoiceRepositoryTest {
         assertThat(invoices.get(0).getDueDate()).isEqualTo(dueDate);
     }
 
-    /**@Test
+    @Test
     void getInvoicesByDueDateBetween() {
 
-       List<Invoice> invoices = invoiceRepository.getInvoicesCreatedBetween(date, dueDate);
-        assertThat(invoices).isNotNull();
-        assertThat(invoices.size()).isGreaterThan(0);
+        List<Invoice> invoicesDueDateBetween = invoiceRepository.getInvoicesByDueDateBetween(date, dueDate);
+        assertThat(invoicesDueDateBetween).isNotNull();
+        assertThat(invoicesDueDateBetween.size()).isEqualTo(2);
 
-        for (Invoice invoice : invoices) {
-            assertThat(invoice.getDueDate()).isBetween(date, dueDate);
-        }
-       // assertThat(invoices.get(0).getDueDate()).isEqualTo(DateHelperUtils.addDays(date, -5), date)):
 
-    }**/
+    }
 
     @Test
     void getOverdueInvoices() {
