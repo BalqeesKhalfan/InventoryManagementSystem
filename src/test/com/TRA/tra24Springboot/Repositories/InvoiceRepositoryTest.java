@@ -140,6 +140,9 @@ class InvoiceRepositoryTest {
 
     @Test
     void getOverdueInvoices() {
+        List<Invoice> invoices = invoiceRepository.getOverdueInvoices(date);
+        assertThat(invoices).isNotNull();
+        assertThat(invoices.size()).isEqualTo(0);
     }
 
     @Test
