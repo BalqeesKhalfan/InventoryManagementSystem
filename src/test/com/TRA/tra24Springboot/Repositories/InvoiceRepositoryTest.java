@@ -32,6 +32,7 @@ class InvoiceRepositoryTest {
     @Autowired
     InvoiceRepository invoiceRepository;
     private final Date date = new Date();
+    private  Date dueDate= DateHelperUtils.addDays(date,1);
 
     @BeforeEach
     void setupInvoice() {
@@ -87,7 +88,7 @@ class InvoiceRepositoryTest {
                 .paidAmount(100.0)
                 .balance(100.0)
 
-                .dueDate(DateHelperUtils.addDays(date, 30))
+                .dueDate(dueDate)
 
                 .build();
         invoice1.setIsActive(Boolean.TRUE);
@@ -100,7 +101,8 @@ class InvoiceRepositoryTest {
                 .totalAmount(300.0)
                 .paidAmount(150.0)
                 .balance(150.0)
-                .dueDate(DateHelperUtils.addDays(date, 20))
+                .dueDate(dueDate)
+                .paymentDate(date)
                 .build();
         invoice2.setCreatedDate(date);
         invoice2.setIsActive(Boolean.TRUE);
@@ -120,15 +122,25 @@ class InvoiceRepositoryTest {
 
     @Test
     void getInvoiceByDueDate() {
-         List<Invoice> invoices = invoiceRepository.getInvoiceByDueDate(DateHelperUtils.addDays(date, 30));
+         List<Invoice> invoices = invoiceRepository.getInvoiceByDueDate(dueDate);
          assertThat(invoices).isNotNull();
         assertThat(invoices.size()).isGreaterThan(0);
-        assertThat(invoices.get(0).getDueDate()).isEqualTo(DateHelperUtils.addDays(date, 30));
+        assertThat(invoices.get(0).getDueDate()).isEqualTo(dueDate);
     }
 
-    @Test
+    /**@Test
     void getInvoicesByDueDateBetween() {
-    }
+
+       List<Invoice> invoices = invoiceRepository.getInvoicesCreatedBetween(date, dueDate);
+        assertThat(invoices).isNotNull();
+        assertThat(invoices.size()).isGreaterThan(0);
+
+        for (Invoice invoice : invoices) {
+            assertThat(invoice.getDueDate()).isBetween(date, dueDate);
+        }
+       // assertThat(invoices.get(0).getDueDate()).isEqualTo(DateHelperUtils.addDays(date, -5), date)):
+
+    }**/
 
     @Test
     void getOverdueInvoices() {
