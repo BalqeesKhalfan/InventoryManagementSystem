@@ -120,9 +120,10 @@ class InvoiceRepositoryTest {
 
     @Test
     void getInvoiceByDueDate() {
-        /**  List<Invoice> invoices = invoiceRepository.getInvoiceByDueDate(DateHelperUtils.addDays(new Date(), 30));
+         List<Invoice> invoices = invoiceRepository.getInvoiceByDueDate(DateHelperUtils.addDays(date, 30));
          assertThat(invoices).isNotNull();
-         assertThat(invoices.size()).isEqualTo(1);**/
+        assertThat(invoices.size()).isGreaterThan(0);
+        assertThat(invoices.get(0).getDueDate()).isEqualTo(DateHelperUtils.addDays(date, 30));
     }
 
     @Test
