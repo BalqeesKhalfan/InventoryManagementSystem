@@ -111,10 +111,10 @@ class InvoiceRepositoryTest {
 
     @Test
     void getInvoiceByCreatedDate() {
-       /** List<Invoice> invoices = invoiceRepository.getInvoiceByCreatedDate(date);
+        List<Invoice> invoices = invoiceRepository.getInvoiceByCreatedDate(date);
         assertThat(invoices).isNotNull();
         assertThat(invoices.size()).isGreaterThan(0);
-        assertThat(invoices.get(0).getCreatedDate()).isEqualTo(date);**/
+        assertThat(invoices.get(0).getCreatedDate()).isEqualTo(date);
 
     }
 
