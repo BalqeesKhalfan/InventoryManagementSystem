@@ -154,5 +154,8 @@ class InvoiceRepositoryTest {
 
     @Test
     void getPaidInvoicesBetween() {
+        List<Invoice> invoices = invoiceRepository.getPaidInvoicesBetween(dueDate, date);
+        assertThat(invoices).isNotNull();
+        assertThat(invoices.size()).isEqualTo(0);
     }
 }
