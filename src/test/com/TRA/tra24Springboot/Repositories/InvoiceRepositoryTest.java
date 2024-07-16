@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Repositories;
 import com.TRA.tra24Springboot.Models.Invoice;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
+import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Utils.DateHelperUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -27,6 +31,7 @@ class InvoiceRepositoryTest {
     ProductRepository productRepository;
     @Autowired
     InvoiceRepository invoiceRepository;
+    private final Date date = new Date();
 
     @BeforeEach
     void setupInvoice() {
@@ -36,12 +41,25 @@ class InvoiceRepositoryTest {
                 .countryOfOrigin("Japan")
                 .price(200.0)
                 .size("24 inches")
-                .expiryDate(new Date())
+                .expiryDate(date)
 
                 .build();
-        productDetails.setCreatedDate(new Date());
+        productDetails.setCreatedDate(date);
         productDetails.setIsActive(Boolean.TRUE);
-        productDetailsRepository.save(productDetails);
+        productDetails = productDetailsRepository.save(productDetails);
+
+
+        ProductDetails productDetails2 = ProductDetails.builder()
+                .name("Phone")
+                .color("Black")
+                .countryOfOrigin("Korea")
+                .price(500.0)
+                .size("6 inches")
+                .expiryDate(date)
+                .build();
+        productDetails2.setCreatedDate(date);
+        productDetails2.setIsActive(Boolean.TRUE);
+        productDetails2 = productDetailsRepository.save(productDetails2);
 
         Product product = Product.builder()
                 .productDetails(productDetails)
@@ -49,42 +67,62 @@ class InvoiceRepositoryTest {
                 .quantity(50)
                 .sku(UUID.randomUUID())
                 .build();
-        product.setCreatedDate(new Date());
+        product.setCreatedDate(date);
         product.setIsActive(Boolean.TRUE);
-        productRepository.save(product);
+        product = productRepository.save(product);
+
+        Product product2 = Product.builder()
+                .productDetails(productDetails2)
+                .category("Toys")
+                .quantity(5)
+                .sku(UUID.randomUUID())
+                .build();
+        product2.setCreatedDate(date);
+        product2.setIsActive(Boolean.TRUE);
+        product2 = productRepository.save(product2);
+
         Invoice invoice1 = Invoice.builder()
                 .productList(List.of(product))
                 .totalAmount(200.0)
                 .paidAmount(100.0)
                 .balance(100.0)
 
-                .dueDate(DateHelperUtils.addDays(new Date(), 30))
+                .dueDate(DateHelperUtils.addDays(date, 30))
 
                 .build();
         invoice1.setIsActive(Boolean.TRUE);
-        invoice1.setCreatedDate(new Date());
+        invoice1.setCreatedDate(date);
 
-        invoiceRepository.save(invoice1);
+        invoice1 = invoiceRepository.save(invoice1);
 
         Invoice invoice2 = Invoice.builder()
-                .productList(List.of(product))
+                .productList(Arrays.asList(product2))
                 .totalAmount(300.0)
                 .paidAmount(150.0)
                 .balance(150.0)
-                .dueDate(DateHelperUtils.addDays(new Date(), 20))
+                .dueDate(DateHelperUtils.addDays(date, 20))
                 .build();
-        invoice2.setCreatedDate(DateHelperUtils.addDays(new Date(), -10));
+        invoice2.setCreatedDate(date);
         invoice2.setIsActive(Boolean.TRUE);
 
-        invoiceRepository.save(invoice2);
+        invoice2 = invoiceRepository.save(invoice2);
 
     }
+
     @Test
     void getInvoiceByCreatedDate() {
+       /** List<Invoice> invoices = invoiceRepository.getInvoiceByCreatedDate(date);
+        assertThat(invoices).isNotNull();
+        assertThat(invoices.size()).isGreaterThan(0);
+        assertThat(invoices.get(0).getCreatedDate()).isEqualTo(date);**/
+
     }
 
     @Test
     void getInvoiceByDueDate() {
+        /**  List<Invoice> invoices = invoiceRepository.getInvoiceByDueDate(DateHelperUtils.addDays(new Date(), 30));
+         assertThat(invoices).isNotNull();
+         assertThat(invoices.size()).isEqualTo(1);**/
     }
 
     @Test
