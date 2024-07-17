@@ -30,6 +30,11 @@ class InventoryRepositoryTest {
 
     @Autowired
     ContactDetailsRepository contactDetailsRepository;
+    private  Integer productId;
+    private  Integer productDetailsId;
+    private  Integer contactDetailsId;
+    private  Integer supplierId;
+    private  Integer inventoryId;
     @BeforeEach
     void  setupInventory() {
         ProductDetails productDetails = ProductDetails.builder()
@@ -43,7 +48,7 @@ class InventoryRepositoryTest {
                 .build();
         productDetails.setCreatedDate(new Date());
         productDetails.setIsActive(Boolean.TRUE);
-        productDetailsRepository.save(productDetails);
+        productDetailsId =productDetailsRepository.save(productDetails).getId();
 
         Product product = Product.builder()
                 .productDetails(productDetails)
@@ -53,7 +58,7 @@ class InventoryRepositoryTest {
                 .build();
         product.setCreatedDate(new Date());
         product.setIsActive(Boolean.TRUE);
-        productRepository.save(product);
+       productId = productRepository.save(product).getId();
 
         ContactDetails contactDetails = ContactDetails.builder()
                 .email("supplier@xyz.com")
@@ -62,7 +67,7 @@ class InventoryRepositoryTest {
                 .address("123 Supplier Street")
                 .postalCode("12345")
                 .build();
-        contactDetailsRepository.save(contactDetails);
+       contactDetailsId= contactDetailsRepository.save(contactDetails).getId();
 
         Supplier supplier = Supplier.builder()
                 .companyName("OXY")
@@ -78,7 +83,7 @@ class InventoryRepositoryTest {
                 .build();
         supplier.setIsActive(Boolean.TRUE);
 
-        supplierRepository.save(supplier);
+      supplierId =  supplierRepository.save(supplier).getId();
 
         Inventory inventory = Inventory.builder()
                 .products(List.of(product))
@@ -92,10 +97,15 @@ class InventoryRepositoryTest {
                 .build();
         inventory.setIsActive(Boolean.TRUE);
         inventory.setCreatedDate(new Date());
-        inventoryRepository.save(inventory);
+       inventoryId = inventoryRepository.save(inventory).getId();
+
     }
     @Test
     void getInventoryById() {
+        Inventory inventoryById= inventoryRepository.getInventoryById(inventoryId);
+
+        assertThat(inventoryById).isNotNull();
+        assertThat(inventoryById.getId()).isEqualTo(inventoryId);
     }
 
    @Test
