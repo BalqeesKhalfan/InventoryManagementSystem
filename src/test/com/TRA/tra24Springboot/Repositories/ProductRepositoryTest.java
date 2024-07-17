@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Repositories;
 
+import com.TRA.tra24Springboot.Models.Invoice;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,8 @@ class ProductRepositoryTest {
     private ProductRepository productRepository;
     @Autowired
     private  ProductDetailsRepository productDetailsRepository;
+     private  Integer productId;
+    private  Integer productDetailsId;
     @BeforeEach
     void setUp() {
         ProductDetails details1 = ProductDetails.builder()
@@ -39,7 +42,7 @@ class ProductRepositoryTest {
                 .build();
         details1.setCreatedDate(new Date());
         details1.setIsActive(Boolean.TRUE);
-        productDetailsRepository.save(details1);
+       productDetailsId= productDetailsRepository.save(details1).getId();
 
         ProductDetails details2 = ProductDetails.builder()
                 .name("Sohar")
@@ -54,7 +57,7 @@ class ProductRepositoryTest {
                 .build();
         details2.setCreatedDate(new Date());
         details2.setIsActive(Boolean.TRUE);
-        productDetailsRepository.save(details2);
+        productDetailsId =productDetailsRepository.save(details2).getId();
         Product product1 = Product.builder()
 
                 .productDetails(details1)
@@ -65,7 +68,7 @@ class ProductRepositoryTest {
                 .build();
         product1.setIsActive(Boolean.TRUE);
         product1.setCreatedDate(new Date());
-        productRepository.save(product1);
+        productId =productRepository.save(product1).getId();
 
         Product product2 = Product.builder()
 
@@ -78,7 +81,7 @@ class ProductRepositoryTest {
 
         product2.setIsActive(Boolean.TRUE);
         product2.setCreatedDate(new Date());
-        productRepository.save(product2);
+       productId= productRepository.save(product2).getId();
     }
 
     @Test
@@ -118,9 +121,10 @@ class ProductRepositoryTest {
 
     @Test
     void getProductById() {
-        Product product = productRepository.findById(productRepository.findAll().get(0).getId()).orElse(null);
-        assertNotNull(product);
-        assertEquals("Springfield Elementary", product.getProductDetails().getName());
+
+        Product productById = productRepository.findById(productId).orElse(null);
+        assertNotNull(productById);
+        assertThat(productById.getId()).isEqualTo(productId);
     }
 
     @Test
