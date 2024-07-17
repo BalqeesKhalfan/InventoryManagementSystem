@@ -33,6 +33,7 @@ class InvoiceRepositoryTest {
     InvoiceRepository invoiceRepository;
     private final Date date = new Date();
     private final Date dueDate= DateHelperUtils.addDays(date,1);
+    Integer invoiceId;
 
     @BeforeEach
     void setupInvoice() {
@@ -94,7 +95,7 @@ class InvoiceRepositoryTest {
         invoice1.setIsActive(Boolean.TRUE);
         invoice1.setCreatedDate(date);
 
-        invoice1 = invoiceRepository.save(invoice1);
+        invoiceId = invoiceRepository.save(invoice1).getId();
 
         Invoice invoice2 = Invoice.builder()
                 .productList(Arrays.asList(product2))
@@ -107,8 +108,15 @@ class InvoiceRepositoryTest {
         invoice2.setCreatedDate(date);
         invoice2.setIsActive(Boolean.TRUE);
 
-        invoice2 = invoiceRepository.save(invoice2);
 
+        invoiceId = invoiceRepository.save(invoice2).getId();
+
+    }
+    @Test
+    void getInvoiceById() {
+        Invoice invoiceById = invoiceRepository.findById(invoiceId).orElse(null);
+        assertThat(invoiceById).isNotNull();
+        assertThat(invoiceById.getId()).isEqualTo(invoiceId);
     }
 
     @Test
