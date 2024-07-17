@@ -28,6 +28,9 @@ class OrderRepositoryTest {
     ProductDetailsRepository productDetailsRepository;
     private UUID sku;
     private Date date;
+    private  Integer orderId;
+    private  Integer productId;
+    private  Integer productDetailsId;
 
     @BeforeEach
     void  setupOrder() {
@@ -40,7 +43,7 @@ class OrderRepositoryTest {
 
                 .build();
         productDetails.setIsActive(Boolean.TRUE);
-        productDetailsRepository.save(productDetails);
+        productDetailsId=productDetailsRepository.save(productDetails).getId();
 
         sku = UUID.randomUUID();
 
@@ -51,7 +54,7 @@ class OrderRepositoryTest {
                 .sku(sku)
                 .build();
         product.setIsActive(Boolean.TRUE);
-        productRepository.save(product);
+       productId= productRepository.save(product).getId();
 
         date = new Date();
         Order order = Order.builder()
@@ -64,8 +67,14 @@ class OrderRepositoryTest {
                 .dueDate(DateHelperUtils.addDays(date, 7))
                 .build();
         order.setIsActive(Boolean.TRUE);
-        orderRepository.save(order);
+        orderId= orderRepository.save(order).getId();
 
+    }
+    @Test
+    void getOrderById(){
+      Order orderById = orderRepository.getOrderById(orderId);
+        assertThat(orderById).isNotNull();
+        assertThat(orderById.getId()).isEqualTo(orderId);
     }
 
 
