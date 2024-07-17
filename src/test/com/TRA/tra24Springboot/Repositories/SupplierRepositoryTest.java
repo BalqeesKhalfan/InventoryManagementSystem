@@ -24,7 +24,13 @@ class SupplierRepositoryTest {
     @Autowired
     ProductRepository productRepository;
     @Autowired
+    private  ProductDetailsRepository productDetailsRepository;
+    @Autowired
     ContactDetailsRepository contactDetailsRepository;
+    private  Integer supplierId;
+    private  Integer productId;
+    private  Integer productDetailsId;
+    private  Integer contactDetailsId;
 
 
     @BeforeEach
@@ -36,7 +42,7 @@ class SupplierRepositoryTest {
                 .address("123 Supplier Street")
                 .postalCode("12345")
                 .build();
-        contactDetailsRepository.save(contactDetails);
+       contactDetailsId = contactDetailsRepository.save(contactDetails).getId();
 
         ProductDetails productDetails1 = ProductDetails.builder()
                 .name("Laptop")
@@ -46,12 +52,12 @@ class SupplierRepositoryTest {
                 .size("Medium")
                 .build();
 
-        Product product1 = Product.builder()
+                Product product1 = Product.builder()
                 .productDetails(productDetails1)
                 .category("Mac Device")
                 .quantity(100)
                 .build();
-
+                productDetailsId=productDetailsRepository.save(productDetails1).getId();
         ProductDetails productDetails2 = ProductDetails.builder()
                 .name("Wach")
                 .color("Blue")
@@ -59,6 +65,7 @@ class SupplierRepositoryTest {
                 .countryOfOrigin("Germany")
                 .size("Large")
                 .build();
+        productDetailsId=productDetailsRepository.save(productDetails2).getId();
 
         Product product2 = Product.builder()
                 .productDetails(productDetails2)
@@ -66,8 +73,8 @@ class SupplierRepositoryTest {
                 .quantity(50)
                 .build();
 
-        productRepository.save(product1);
-        productRepository.save(product2);
+       productId= productRepository.save(product1).getId();
+        productId= productRepository.save(product2).getId();
 
         Supplier supplier = Supplier.builder()
                 .companyName("OXY")
@@ -83,10 +90,15 @@ class SupplierRepositoryTest {
                 .build();
         supplier.setIsActive(Boolean.TRUE);
 
-        supplierRepository.save(supplier);
+       supplierId= supplierRepository.save(supplier).getId();
 
     }
-
+   @Test
+   void  getSupplierById(){
+        Supplier supplierById = supplierRepository.getSupplierById(supplierId);
+        assertThat(supplierById).isNotNull();
+       assertThat(supplierById.getId()).isEqualTo(supplierId);
+   }
 
 
     @Test
