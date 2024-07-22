@@ -185,6 +185,11 @@ public class ProductController {
        }
        return lowStockProducts;
    }
+
+    @GetMapping("word")
+    public String sayhi(@RequestParam String word){
+        return word;
+    }
 }
 
 
