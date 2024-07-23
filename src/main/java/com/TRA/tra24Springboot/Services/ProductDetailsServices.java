@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Services;
 
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.ProductDetails;
 import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.util.Date;
 public class ProductDetailsServices {
     @Autowired
     ProductDetailsRepository productDetailsRepository;
+    @TrackExecutionTime
     public ProductDetails addProductDetails(ProductDetails productDetails){
         productDetails = new ProductDetails();
         productDetails.setName("Mac device");

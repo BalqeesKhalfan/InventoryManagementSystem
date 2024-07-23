@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.ContactDetailsDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.ContactDetails;
 import com.TRA.tra24Springboot.Repositories.ContactDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.Date;
 public class ContactDetailsServices {
     @Autowired
     ContactDetailsRepository contactDetailsRepository;
+    @TrackExecutionTime
      public ContactDetails addContactDetails(ContactDetails contactDetails){
          contactDetails.setAddress("Muscat,Oman");
          contactDetails.setEmail("b.k.malshuraiqia@gmail.com");
@@ -25,6 +27,7 @@ public class ContactDetailsServices {
 
          return contactDetailsRepository.save(contactDetails);
      }
+    @TrackExecutionTime
     public String deleteContactDetails(Integer id){
         ContactDetails contactDetails = contactDetailsRepository.findById(id).get();
 
@@ -34,6 +37,7 @@ public class ContactDetailsServices {
         }
         return "Success";
     }
+    @TrackExecutionTime
     public ContactDetails updateContactDetails(ContactDetails contactDetails) {
 
         String email = contactDetails.getEmail();
@@ -51,6 +55,7 @@ public class ContactDetailsServices {
         return contactDetailsRepository.save(contactDetails);
     }
 
+    @TrackExecutionTime
     public ContactDetailsDTO reportCotactDetails(ContactDetails contactDetails){
         return  ContactDetailsDTO.convertToDTO(contactDetails);
     }

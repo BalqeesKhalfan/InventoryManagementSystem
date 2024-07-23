@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Services;
 
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class MailingService {
     @Value("${spring.mail.username}")
     private String sender;
 
+    @TrackExecutionTime
     public String sendSimpleMail() {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -34,7 +36,7 @@ public class MailingService {
 
         }
     }
-
+    @TrackExecutionTime
     public String sendMailWithAttachment() {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper;

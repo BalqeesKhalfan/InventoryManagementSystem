@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Services;
 
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.slack.api.Slack;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
@@ -15,7 +16,7 @@ public class SlackService {
     @Value("${slack.token.integration}")
     private String slackToken;
 
-
+    @TrackExecutionTime
     public void sendMessage( String channel, String message) {
         Slack slack = Slack.getInstance();
 
@@ -36,7 +37,9 @@ public class SlackService {
         } catch (Exception e) {
             System.out.println("Error sending message to Slack: " + e.getMessage());
         }
-    }   public void sendMessageDeffrentChannel( String channel, String message) {
+    }
+    @TrackExecutionTime
+    public void sendMessageDeffrentChannel( String channel, String message) {
         Slack slack = Slack.getInstance();
 
 
@@ -57,11 +60,13 @@ public class SlackService {
         }
     }
   // @Scheduled(cron = "* 0/1 * * * *")  Add scheduled cron  exprection to run every second , every one mint every day of month and every month and evry day of week
+  @TrackExecutionTime
     public  void  sendSchduledMessge(){
        String channel = "#balqees";//here we can sepcife the channel name
        String message = "Testing CRON";
        sendMessageCRON(channel,message);
    }
+    @TrackExecutionTime
     public void sendMessageCRON( String channel, String message) {
         Slack slack = Slack.getInstance();
 

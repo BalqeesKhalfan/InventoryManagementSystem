@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.OrderDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class InventoryServices {
     OrderRepository orderRepository;
     @Autowired
     SlackService slackService;
+    @TrackExecutionTime
     public Inventory receiveStock( Inventory inventoryItem) throws  Exception {
         try {
             ProductDetails productDetails = ProductDetails.builder()
@@ -85,7 +87,7 @@ public class InventoryServices {
         }
     }
 
-
+    @TrackExecutionTime
     public Inventory writeOffInventory(Integer inventoryId) throws Exception {
         try {
             Inventory inventoryFromDb = inventoryRepository.getInventoryById(inventoryId);
@@ -101,6 +103,7 @@ public class InventoryServices {
             throw new Exception("Failed to write off inventory: " + e.getMessage(), e);
         }
     }
+    @TrackExecutionTime
     public List<InventoryDTO> getAll() throws  Exception{
         try {
             List<Inventory> inventories = inventoryRepository.findAll();
@@ -112,7 +115,7 @@ public class InventoryServices {
             throw new Exception("Failed to retrieve Orders : " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public Inventory getInventoryById(Integer inventoryId) throws  Exception{
         try {
             Inventory inventory =inventoryRepository.getInventoryById(inventoryId);
@@ -124,6 +127,7 @@ public class InventoryServices {
             throw new Exception("Failed to retrieve order: " + e.getMessage(), e);
         }
     }
+    @TrackExecutionTime
     public List<Inventory>getInventoryByIsActive(Boolean isActive) throws  Exception {
         try {
             List<Inventory> inventories = inventoryRepository.getInventoryByAvailability(isActive);
@@ -136,6 +140,7 @@ public class InventoryServices {
         }
 
     }
+    @TrackExecutionTime
     public List<Inventory> getInventoryByLocation(String location)throws  Exception{
         try {
             List<Inventory> inventories = inventoryRepository.getInventoryByLocation(location);
@@ -148,6 +153,7 @@ public class InventoryServices {
         }
 
     }
+    @TrackExecutionTime
     public List<Inventory> getInventoryByAdminName(String admin) throws  Exception{
         try {
             List<Inventory> inventories = inventoryRepository.getInventoryByAdminName(admin);

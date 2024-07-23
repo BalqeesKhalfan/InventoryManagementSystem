@@ -1,6 +1,7 @@
 package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.ProductDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
 import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
@@ -37,14 +38,14 @@ public class ProductServices {
         return productRepository.save(product);
 
     }
-
+    @TrackExecutionTime
     public String deleteProduct(String productName) {
         Product productFromDb = productRepository.getByProductName(productName);
         productFromDb.setIsActive(Boolean.FALSE);
         productRepository.save(productFromDb);
         return "Success";
     }
-
+    @TrackExecutionTime
     public String deleteProductById(Integer productId) throws Exception {
         try {
             Product product = productRepository.getProductById(productId);
@@ -60,7 +61,7 @@ public class ProductServices {
             throw new Exception("Failed to delete Product : " + e.getMessage());
         }
     }
-
+    @TrackExecutionTime
     public String updateProductQuantity(Integer productId, Integer quantity) throws Exception {
         try {
             Product productFromDb = productRepository.getProductById(productId);
@@ -77,11 +78,11 @@ public class ProductServices {
             throw new Exception("Failed to update product quantity: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public Product updateProduct(Product product) {
         return productRepository.save(product);
     }
-
+    @TrackExecutionTime
     public List<ProductDTO> getProduct() throws Exception {
         try {
             List<Product> products = productRepository.findAll();
@@ -93,7 +94,7 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public Product getProductById(Integer productId) throws Exception {
         try {
             Product product = productRepository.getProductById(productId);
@@ -105,7 +106,7 @@ public class ProductServices {
             throw new Exception("Failed to retrieve product: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public List<Product> getProductsByName(String productName) throws Exception {
         try {
             List<Product> products = productRepository.findByProductName(productName);
@@ -117,7 +118,7 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products by name: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public List<Product> getProductsByColor(String color) throws Exception {
 
         try {
@@ -132,7 +133,7 @@ public class ProductServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Product> getProductsByPrice(Double price) throws Exception {
         try {
             List<Product> products = productRepository.findByProductPrice(price);
@@ -145,7 +146,7 @@ public class ProductServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Product> getProductByCountry(String country) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByCountry(country);
@@ -159,7 +160,7 @@ public class ProductServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Product> getProductBySize(String size) throws Exception {
         try {
             List<Product> products = productRepository.findByProductBySize(size);
@@ -172,7 +173,7 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products With size : " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public List<Product> getProductByCategory(String category) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByCategory(category);
@@ -185,7 +186,7 @@ public class ProductServices {
             throw new Exception("Failed to retrieve products With category : " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public List<Product> getProductByIsActive(Boolean isActive) throws Exception {
         try {
             List<Product> products = productRepository.findByProductByIsActive(isActive);
@@ -213,10 +214,11 @@ public class ProductServices {
      * return lowStockProducts;
      * }
      **/
+    @TrackExecutionTime
     public List<Product> getProductByQuantity(Integer quantity) {
         return productRepository.getProductByQuantity(quantity);
     }
-
+    @TrackExecutionTime
     public List<Product> getLowStockProducts() {
         List<Product> products = productRepository.findAll();
         List<Product> lowStockProducts = new ArrayList<>();

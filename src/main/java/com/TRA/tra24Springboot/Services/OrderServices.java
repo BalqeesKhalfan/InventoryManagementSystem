@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class OrderServices {
     OrderRepository orderRepository;
     @Autowired
     ProductServices productServices;
+    @TrackExecutionTime
     public Order createOrder(@RequestBody Order order){
 
         Product product = productServices.addProduct(order.getProductsOrdered().get(0));
@@ -36,7 +38,7 @@ public class OrderServices {
         //order.setIsActive(Boolean.TRUE);
         return orderRepository.save(order);
     }
-
+    @TrackExecutionTime
     public Order updateOrder(@RequestParam Integer orderId) throws  Exception {
         try {
             Order orderFromDb = orderRepository.getOrderById(orderId);
@@ -49,7 +51,7 @@ public class OrderServices {
             throw new Exception("Failed to update order: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public String cancelOrder(@PathVariable("orderId") Integer orderId) {
         Order orderFromDb = orderRepository.getOrderById(orderId);
         if (orderFromDb != null && orderFromDb.getStatus() == OrderStatus.IN_PROGRESS) {
@@ -68,7 +70,7 @@ public class OrderServices {
     }
 
 
-
+    @TrackExecutionTime
     public List<OrderDTO> getOrder() throws  Exception{
         try {
             List <Order> orders = orderRepository.findAll();
@@ -80,6 +82,7 @@ public class OrderServices {
             throw new Exception("Failed to retrieve Orders : " + e.getMessage(), e);
         }
     }
+    @TrackExecutionTime
     public Order getOrderById(Integer orderId) throws  Exception{
         try {
             Order order = orderRepository.getOrderById(orderId);
@@ -92,7 +95,7 @@ public class OrderServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Order> getOrderByStatus(OrderStatus orderStatus) throws Exception{
         try {
             List<Order> orders=orderRepository.getOrderByStatus(orderStatus);
@@ -105,6 +108,7 @@ public class OrderServices {
         }
 
     }
+    @TrackExecutionTime
     public List<Order> getOrderByPaymentStatus(PaymentStatus paymentStatus) throws  Exception{
         try {
             List<Order> orders = orderRepository.getOrderByPaymentStatus(paymentStatus);
@@ -117,6 +121,7 @@ public class OrderServices {
         }
     }
 
+    @TrackExecutionTime
     public List<Order> getOrderByPaymentType(PaymentType paymentType) throws Exception {
         try {
             List<Order> orders = orderRepository.getOrderByPaymentType(paymentType);
@@ -129,7 +134,7 @@ public class OrderServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Order> getOrderByCategoryName(String categoryName) throws Exception {
         try {
             List<Order> orders = orderRepository.getOrderByCategoryName(categoryName);
@@ -142,7 +147,7 @@ public class OrderServices {
         }
 
     }
-
+    @TrackExecutionTime
     public List<Order>getOrderByIsActive(Boolean isActive) throws  Exception{
         try {
             List<Order> orders = orderRepository.findByOrderByIsActive(isActive);

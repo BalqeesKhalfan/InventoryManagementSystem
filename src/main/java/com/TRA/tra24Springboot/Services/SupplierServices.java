@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
@@ -29,7 +30,7 @@ public class SupplierServices {
     OrderRepository orderRepository;
     @Autowired
     ContactDetailsServices contactDetailsServices;
-
+    @TrackExecutionTime
     public Supplier addSupplier(Supplier supplier) {
         //ContactDetails contactDetails = new ContactDetails();
 
@@ -94,7 +95,7 @@ public class SupplierServices {
 
         return supplierRepository.save(supplier);
     }
-
+    @TrackExecutionTime
     public String updateMinimumOrderQuantity(Integer supplierId, Integer quantity) throws Exception {
 
         try {
@@ -111,7 +112,7 @@ public class SupplierServices {
             throw new Exception("Failed to update Minimum Order  quantity: " + e.getMessage(), e);
         }
     }
-
+    @TrackExecutionTime
     public String remove(Integer supplierId) throws Exception {
         try {
             Supplier supplierFromDb = supplierRepository.getSupplierById(supplierId);
@@ -126,6 +127,7 @@ public class SupplierServices {
             throw new Exception("Failed to remove Supplier : " + e.getMessage(), e);
         }
     }
+    @TrackExecutionTime
         public List<SupplierDTO> getSuppliers () throws  Exception {
         try {
             List<Supplier> suppliers = supplierRepository.findAll();
@@ -138,6 +140,7 @@ public class SupplierServices {
         }
 
         }
+       @TrackExecutionTime
         public Supplier getSupplierById (Integer supplierId)throws Exception{
         try {
             Supplier supplier = supplierRepository.getSupplierById(supplierId);
@@ -149,7 +152,8 @@ public class SupplierServices {
             throw new Exception("Failed to retrieve Supplier: " + e.getMessage(), e);
         }
     }
-        public List<Supplier> getSupplierByCompanyName (String companyName) throws  Exception{
+    @TrackExecutionTime
+    public List<Supplier> getSupplierByCompanyName (String companyName) throws  Exception{
         try {
             List<Supplier> suppliers = supplierRepository.getSupplierByCompanyName(companyName);
             if (suppliers.isEmpty()) {
@@ -159,6 +163,7 @@ public class SupplierServices {
         }catch (Exception e) {
             throw new Exception("Failed to retrieve suppliers by Company name: " + e.getMessage(), e);}
      }
+    @TrackExecutionTime
       public List<Supplier> getSupplierByCountry (String countr) throws  Exception{
            try {
                List<Supplier> suppliers = supplierRepository.getSupplierByCountry(countr);
@@ -171,7 +176,7 @@ public class SupplierServices {
            }
 
        }
-
+    @TrackExecutionTime
         public List<Supplier> getSupplierByMinimumOrderQuantity (Integer minimumOrderQuantity) throws  Exception{
         try{
             List<Supplier> suppliers = supplierRepository.getSupplierByMinimumOrderQuantity(minimumOrderQuantity);
@@ -183,7 +188,7 @@ public class SupplierServices {
             throw  new Exception("Failed to retrieve suppliers By Minimum Order Quantity"+e.getMessage());
         }
         }
-
+        @TrackExecutionTime
         public List<Supplier> getSupplierByIsActive (Boolean isActive)throws  Exception{
             try {
                 List<Supplier> suppliers = supplierRepository.findBySupplierByIsActive(isActive);
@@ -195,7 +200,7 @@ public class SupplierServices {
                 throw new Exception("Failed to retrieve suppliers With isActive : " + e.getMessage(), e);
             }
         }
-
+        @TrackExecutionTime
         public List<Supplier> findBySupplierByShippingMethods (String shippingMethods) throws  Exception{
            try {
                List<Supplier> suppliers = supplierRepository.findBySupplierByShippingMethods(shippingMethods);
@@ -207,6 +212,7 @@ public class SupplierServices {
                throw new Exception("Failed to retrieve suppliers shipping Method : " + e.getMessage(), e);
            }
         }
+        @TrackExecutionTime
         public List<Supplier> getSupplierByPaymentMethod (PaymentType paymentMethods) throws  Exception{
            try {
                List<Supplier> suppliers = supplierRepository.getSupplierByPaymentMethod(paymentMethods);
