@@ -2,6 +2,7 @@ package com.TRA.tra24Springboot.Controllers;
 
 
 import com.TRA.tra24Springboot.DTO.ProductDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.MailingService;
 import com.TRA.tra24Springboot.Services.ProductServices;
@@ -150,8 +151,8 @@ public class ProductController {
             return new ResponseEntity<>("Retrieving products by category failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("getByIsActive")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductByIsActive(@RequestParam Boolean isActive) {
         try {
             List<Product> products = productServices.getProductByIsActive(isActive);
