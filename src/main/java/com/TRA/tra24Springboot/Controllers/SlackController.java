@@ -17,12 +17,12 @@ public class SlackController {
     @Autowired
     SlackService slackService;
     @GetMapping("messages")
-    @TrackExecutionTime
+
     public void sendMessage(){
         slackService.sendMessage("", "");
     }
     @GetMapping("messagesDifrentChannel")
-    @TrackExecutionTime
+
     public void sendMessage(@RequestParam String channel, @RequestParam String message){
         slackService.sendMessageDeffrentChannel( channel, message);
     }

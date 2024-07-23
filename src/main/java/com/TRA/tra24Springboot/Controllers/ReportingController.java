@@ -24,7 +24,6 @@ public class ReportingController {
     @Autowired
     private SupplierController supplier;
     @GetMapping("/inventory")
-    @TrackExecutionTime
     public String generateInventoryReportWeekly() {
         // Call service method to fetch all products in inventory
         return inventory.reportInventory();

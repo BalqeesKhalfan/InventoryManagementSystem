@@ -29,7 +29,7 @@ public class InventoryController {
 
 
     @PostMapping("receive")
-    @TrackExecutionTime
+
     public ResponseEntity<?> receiveStock( Inventory inventoryItem) {
 
         try {
@@ -40,7 +40,7 @@ public class InventoryController {
         }
     }
     @PostMapping("write-off")
-    @TrackExecutionTime
+
     public ResponseEntity<?> writeOffInventory(@RequestParam Integer inventoryId) {
         try {
             Inventory result = inventoryServices.writeOffInventory(inventoryId);
@@ -53,7 +53,7 @@ public class InventoryController {
 
     // reporting all Inventory
     @GetMapping("report")
-    @TrackExecutionTime
+
     public String reportInventory() {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -96,7 +96,7 @@ public class InventoryController {
     }
 
     @GetMapping("getAll")
-    @TrackExecutionTime
+
     public ResponseEntity<?>getInventories(){
         try {
             List<InventoryDTO> inventories = inventoryServices.getAll();
@@ -108,7 +108,7 @@ public class InventoryController {
     }
 
     @GetMapping("getById")
-    @TrackExecutionTime
+
     public ResponseEntity<?> getInventoryById(@RequestParam Integer inventoryId){
         try {
             Inventory inventory = inventoryServices.getInventoryById(inventoryId);
@@ -120,7 +120,7 @@ public class InventoryController {
 
     }
     @GetMapping("getByAvailability")
-    @TrackExecutionTime
+
     public ResponseEntity<?> getInventoryByAvailability(@RequestParam Boolean isActive){
         try {
             List<Inventory> inventories= inventoryServices.getInventoryByIsActive(isActive);
@@ -131,7 +131,7 @@ public class InventoryController {
 
     }
     @GetMapping("getByLocation")
-    @TrackExecutionTime
+
     public ResponseEntity<?> getInventoryByLocation(@RequestParam String location) {
         try {
             List<Inventory> inventories=inventoryServices.getInventoryByLocation(location);
