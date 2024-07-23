@@ -14,21 +14,21 @@ public class LoggingAdvice {
     public static Logger logger = LoggerFactory.getLogger(LoggingAdvice.class);
 
 
-    @Pointcut(value = "execution(* com.TRA.tra24Springboot.Controllers.ProductController.*(..))")
-    public void pointCutDefinitionProduct() {
+    @Pointcut(value = "execution(* com.TRA.tra24Springboot.Controllers.*.*(..))")
+    public void pointCutDefinition() {
     }
 
-    @Before(value = "pointCutDefinitionProduct()")
+    @Before(value = "pointCutDefinition()")
     public void logBefore(JoinPoint pjp) {
         System.out.println("Before method: " + pjp.getSignature().getName());
     }
 
-    @AfterReturning(value = "pointCutDefinitionProduct()", returning = "result")
+    @AfterReturning(value = "pointCutDefinition()", returning = "result")
     public void logAfterReturning(JoinPoint pjp, Object result) {
         System.out.println("After method: " + pjp.getSignature().getName() + ", Result: " + result);
     }
 
-    @Around(value = "pointCutDefinitionProduct()")
+    @Around(value = "pointCutDefinition()")
     public Object applicationLogger(ProceedingJoinPoint pjp) throws Throwable {
         ObjectMapper mapper = new ObjectMapper();
 
