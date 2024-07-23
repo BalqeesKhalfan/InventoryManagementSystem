@@ -2,12 +2,14 @@ package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.OrderDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Order;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
 import com.TRA.tra24Springboot.Repositories.InventoryRepository;
 import com.TRA.tra24Springboot.Services.InventoryServices;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
+    Inventory globalInventoryItem;
 
     @Autowired
     InventoryServices inventoryServices;
 
+
     @PostMapping("receive")
+    @TrackExecutionTime
     public ResponseEntity<?> receiveStock( Inventory inventoryItem) {
 
         try {
@@ -35,6 +40,7 @@ public class InventoryController {
         }
     }
     @PostMapping("write-off")
+    @TrackExecutionTime
     public ResponseEntity<?> writeOffInventory(@RequestParam Integer inventoryId) {
         try {
             Inventory result = inventoryServices.writeOffInventory(inventoryId);
@@ -46,12 +52,13 @@ public class InventoryController {
 
 
     // reporting all Inventory
-   /** @GetMapping("report")
+    @GetMapping("report")
+    @TrackExecutionTime
     public String reportInventory() {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("********** Report *************\n");
-     //   stringBuilder.append("Products: "+globalInventoryItem.getProducts()+"\n");
+       stringBuilder.append("Products: "+globalInventoryItem.getProducts()+"\n");
         // Sort products by name
         List<Product> sortedProducts = globalInventoryItem.getProducts().stream().collect(Collectors.toList());
 
@@ -86,9 +93,10 @@ public class InventoryController {
             productsInfo.append("\n");
         }
         return productsInfo.toString();
-    }**/
+    }
 
     @GetMapping("getAll")
+    @TrackExecutionTime
     public ResponseEntity<?>getInventories(){
         try {
             List<InventoryDTO> inventories = inventoryServices.getAll();
@@ -100,6 +108,7 @@ public class InventoryController {
     }
 
     @GetMapping("getById")
+    @TrackExecutionTime
     public ResponseEntity<?> getInventoryById(@RequestParam Integer inventoryId){
         try {
             Inventory inventory = inventoryServices.getInventoryById(inventoryId);
@@ -111,6 +120,7 @@ public class InventoryController {
 
     }
     @GetMapping("getByAvailability")
+    @TrackExecutionTime
     public ResponseEntity<?> getInventoryByAvailability(@RequestParam Boolean isActive){
         try {
             List<Inventory> inventories= inventoryServices.getInventoryByIsActive(isActive);
@@ -121,6 +131,7 @@ public class InventoryController {
 
     }
     @GetMapping("getByLocation")
+    @TrackExecutionTime
     public ResponseEntity<?> getInventoryByLocation(@RequestParam String location) {
         try {
             List<Inventory> inventories=inventoryServices.getInventoryByLocation(location);
@@ -132,7 +143,7 @@ public class InventoryController {
     }
 
     @GetMapping("getByAdmin")
-    
+
     public ResponseEntity<?> getInventoryByAdminName(@RequestParam String admin){
         try {
             List<Inventory> inventories=inventoryServices.getInventoryByAdminName(admin);
@@ -142,5 +153,6 @@ public class InventoryController {
         }
 
     }
+
 
 }

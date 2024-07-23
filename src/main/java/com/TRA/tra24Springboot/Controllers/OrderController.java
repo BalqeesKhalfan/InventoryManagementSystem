@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Controllers;
 import com.TRA.tra24Springboot.DTO.OrderDTO;
 import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.*;
 import com.TRA.tra24Springboot.Repositories.OrderRepository;
 import com.TRA.tra24Springboot.Services.OrderServices;
@@ -24,11 +25,13 @@ public class OrderController {
     @Autowired
     SlackService slackService;
     @PostMapping("create")
+    @TrackExecutionTime
     public Order createOrder(@RequestBody Order order) {
         slackService.sendMessage("Balqees","Order has been Added");
         return orderServices.createOrder(order);
     }
     @PutMapping("update")
+    @TrackExecutionTime
     public  <T>ResponseEntity<T>  updateOrder(@RequestParam Integer orderId) {
         try {
             Order result = orderServices.updateOrder(orderId);
@@ -40,6 +43,7 @@ public class OrderController {
     }
 
     @PutMapping("cancel")
+    @TrackExecutionTime
     public <T> ResponseEntity<T> cancelOrder(@RequestParam Integer orderId) {
         try {
             String result = orderServices.cancelOrder(orderId);
@@ -55,6 +59,7 @@ public class OrderController {
 
 
    @GetMapping("getOrder")
+   @TrackExecutionTime
    public ResponseEntity<?>  getOrder(){
         try {
             List<OrderDTO> orders = orderServices.getOrder();
@@ -64,6 +69,7 @@ public class OrderController {
         }
    }
     @GetMapping("getById")
+    @TrackExecutionTime
     public ResponseEntity<?> getOrderById(@RequestParam Integer orderId){
         try {
             Order order = orderServices.getOrderById(orderId);
@@ -75,6 +81,7 @@ public class OrderController {
 
     }
     @GetMapping("getByStatus")
+    @TrackExecutionTime
     public ResponseEntity<?>  getOrderByStatus(@RequestParam OrderStatus orderStatus){
         try {
             List<Order> orders= orderServices.getOrderByStatus(orderStatus);
@@ -84,6 +91,7 @@ public class OrderController {
         }
     }
     @GetMapping("getByPaymentStatus")
+    @TrackExecutionTime
     public ResponseEntity<?> getOrderByPaymentStatus(@RequestParam PaymentStatus paymentStatus){
         try {
             List<Order> orders= orderServices.getOrderByPaymentStatus(paymentStatus);
@@ -94,6 +102,7 @@ public class OrderController {
 
     }
     @GetMapping("getByPaymentType")
+    @TrackExecutionTime
     public ResponseEntity<?> getOrderByPaymentType(@RequestParam PaymentType paymentType){
         try {
             List<Order>orders =orderServices.getOrderByPaymentType(paymentType);
@@ -104,6 +113,7 @@ public class OrderController {
         }
     }
     @GetMapping("getByCategoryName")
+    @TrackExecutionTime
     public ResponseEntity<?> getOrderByPaymentType(@RequestParam String categoryName){
         try {
             List<Order>orders =orderServices.getOrderByCategoryName(categoryName);
@@ -114,6 +124,7 @@ public class OrderController {
         }
     }
     @GetMapping("getByIsActive")
+    @TrackExecutionTime
     public ResponseEntity<?> getOrderByIsActive(@RequestParam Boolean isActive) {
 
         try {

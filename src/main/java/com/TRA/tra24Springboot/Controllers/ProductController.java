@@ -30,18 +30,21 @@ public class ProductController {
     SlackService slackService;
 
     @PostMapping("add")
+    @TrackExecutionTime
     public Product addProduct(@RequestBody Product product) {
 
         return productServices.addProduct(product);
     }
 
     @PostMapping("delete")
+    @TrackExecutionTime
     public String deleteProduct(@RequestParam String productName) {
         productServices.deleteProduct(productName);
         return "Success";
     }
 
     @PostMapping("deleteById")
+    @TrackExecutionTime
     public <T> ResponseEntity<T> deleteProductById(@RequestParam Integer productId) throws Exception {
         try {
             String result = productServices.deleteProductById(productId);
@@ -55,6 +58,7 @@ public class ProductController {
 
 
     @PutMapping("update")
+    @TrackExecutionTime
     public <T> ResponseEntity<T> updateProduct(@RequestParam Integer id, @RequestParam Integer quantity) {
         try {
             String result = productServices.updateProductQuantity(id, quantity);
@@ -67,6 +71,7 @@ public class ProductController {
     }
 
     @GetMapping("get")
+    @TrackExecutionTime
     public <T> ResponseEntity<T> getProducts() throws Exception {
         mailingService.sendSimpleMail();
         return new ResponseEntity(productServices.getProduct(), HttpStatus.OK);
@@ -79,6 +84,7 @@ public class ProductController {
      * }
      **/
     @GetMapping("getById")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductById(@RequestParam Integer productId) {
         try {
             Product product = productServices.getProductById(productId);
@@ -90,6 +96,7 @@ public class ProductController {
     }
 
     @GetMapping("getByName")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductsByName(@RequestParam String productName) {
         try {
             List<Product> products = productServices.getProductsByName(productName);
@@ -100,6 +107,7 @@ public class ProductController {
     }
 
     @GetMapping("getByColor")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductsByColor(@RequestParam String color) {
         try {
             List<Product> products = productServices.getProductsByColor(color);
@@ -111,6 +119,7 @@ public class ProductController {
     }
 
     @GetMapping("getByPrice")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductsByPrice(@RequestParam Double price) {
         try {
             List<Product> products = productServices.getProductsByPrice(price);
@@ -122,6 +131,7 @@ public class ProductController {
     }
 
     @GetMapping("getByCountry")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductByCountry(@RequestParam String country) {
         try {
             List<Product> products = productServices.getProductByCountry(country);
@@ -133,6 +143,7 @@ public class ProductController {
     }
 
     @GetMapping("getBySize")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductBySize(@RequestParam String size) {
         try {
             List<Product> products = productServices.getProductBySize(size);
@@ -143,6 +154,7 @@ public class ProductController {
     }
 
     @GetMapping("getByCategory")
+    @TrackExecutionTime
     public ResponseEntity<?> getProductByCategory(@RequestParam String category) {
         try {
             List<Product> products = productServices.getProductByCategory(category);
@@ -171,6 +183,7 @@ public class ProductController {
     }**/
    @Scheduled(cron = "0 0 9/6 * * *")
    @GetMapping("lowStock")
+   @TrackExecutionTime
    public List<Product> lowStockCheck() {
        List<Product> lowStockProducts = productServices.getLowStockProducts();
        if (!lowStockProducts.isEmpty()) {
@@ -188,6 +201,7 @@ public class ProductController {
    }
 
     @GetMapping("word")
+    @TrackExecutionTime
     public String sayhi(@RequestParam String word){
         return word;
     }

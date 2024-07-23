@@ -1,5 +1,6 @@
 package com.TRA.tra24Springboot.Controllers;
 
+import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.Supplier;
@@ -22,6 +23,12 @@ public class ReportingController {
 
     @Autowired
     private SupplierController supplier;
+    @GetMapping("/inventory")
+    @TrackExecutionTime
+    public String generateInventoryReportWeekly() {
+        // Call service method to fetch all products in inventory
+        return inventory.reportInventory();
+    }
 
     /** @GetMapping("/inventory")
     public String generateInventoryReport() {

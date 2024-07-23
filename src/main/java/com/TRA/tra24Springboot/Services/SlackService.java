@@ -15,11 +15,12 @@ public class SlackService {
     @Value("${slack.token.integration}")
     private String slackToken;
 
+
     public void sendMessage( String channel, String message) {
         Slack slack = Slack.getInstance();
 
         channel = "#balqees";//here we can sepcife the channel name
-        message = "Testing";
+        //message = "Testing";
         ChatPostMessageRequest request = ChatPostMessageRequest.builder()
                 .channel(channel)
                 .text(message)
