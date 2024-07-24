@@ -1,12 +1,10 @@
 package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.ProductDTO;
-import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
+import com.TRA.tra24Springboot.AOP.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Models.ProductDetails;
-import com.TRA.tra24Springboot.Repositories.ProductDetailsRepository;
 import com.TRA.tra24Springboot.Repositories.ProductRepository;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

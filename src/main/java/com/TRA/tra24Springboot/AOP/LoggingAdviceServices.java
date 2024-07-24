@@ -1,4 +1,4 @@
-package com.TRA.tra24Springboot.Logging;
+package com.TRA.tra24Springboot.AOP;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.JoinPoint;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAdviceServices {
 
-        public static Logger logger = LoggerFactory.getLogger(com.TRA.tra24Springboot.Logging.LoggingAdviceServices.class);
+        public static Logger logger = LoggerFactory.getLogger(com.TRA.tra24Springboot.AOP.LoggingAdviceServices.class);
 
 
         @Pointcut(value = "execution(* com.TRA.tra24Springboot.Services.*.*(..))")

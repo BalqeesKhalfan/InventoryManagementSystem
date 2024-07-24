@@ -1,4 +1,4 @@
-package com.TRA.tra24Springboot.Logging;
+package com.TRA.tra24Springboot.AOP;
 
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;

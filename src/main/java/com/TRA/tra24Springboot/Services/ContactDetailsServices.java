@@ -1,7 +1,7 @@
 package com.TRA.tra24Springboot.Services;
 
 import com.TRA.tra24Springboot.DTO.ContactDetailsDTO;
-import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
+import com.TRA.tra24Springboot.AOP.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.ContactDetails;
 import com.TRA.tra24Springboot.Repositories.ContactDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

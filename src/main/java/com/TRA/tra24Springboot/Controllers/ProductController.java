@@ -1,8 +1,6 @@
 package com.TRA.tra24Springboot.Controllers;
 
 
-import com.TRA.tra24Springboot.DTO.ProductDTO;
-import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.MailingService;
 import com.TRA.tra24Springboot.Services.ProductServices;

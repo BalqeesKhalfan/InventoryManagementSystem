@@ -1,6 +1,6 @@
 package com.TRA.tra24Springboot.Services;
 
-import com.TRA.tra24Springboot.Logging.TrackExecutionTime;
+import com.TRA.tra24Springboot.AOP.TrackExecutionTime;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

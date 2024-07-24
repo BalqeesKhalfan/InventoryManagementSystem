@@ -1,4 +1,4 @@
-package com.TRA.tra24Springboot.Logging;
+package com.TRA.tra24Springboot.AOP;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.JoinPoint;

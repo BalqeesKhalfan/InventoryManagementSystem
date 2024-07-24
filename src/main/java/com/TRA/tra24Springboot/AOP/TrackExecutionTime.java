@@ -1,4 +1,4 @@
-package com.TRA.tra24Springboot.Logging;
+package com.TRA.tra24Springboot.AOP;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
