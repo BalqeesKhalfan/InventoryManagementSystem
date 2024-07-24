@@ -13,7 +13,7 @@ public class ExecutionTimeTrackerAdvice {
 
     Logger logger= LoggerFactory.getLogger(ExecutionTimeTrackerAdvice.class);
 
-    @Around("@annotation(com.TRA.tra24Springboot.Logging.TrackExecutionTime)")
+    @Around("@annotation(com.TRA.tra24Springboot.AOP.TrackExecutionTime)")
     public Object trackTime(ProceedingJoinPoint pjp) throws Throwable {
         long stratTime=System.currentTimeMillis();
         Object obj=pjp.proceed();
