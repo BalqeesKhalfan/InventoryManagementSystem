@@ -4,6 +4,7 @@ import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.InventoryServices;
+import com.TRA.tra24Springboot.Services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,8 @@ public class InventoryController {
 
     @Autowired
     InventoryServices inventoryServices;
-
+    @Autowired
+    ReportService reportService;
 
     @PostMapping("receive")
 
@@ -93,6 +95,7 @@ public class InventoryController {
     public ResponseEntity<?>getInventories(){
         try {
             List<InventoryDTO> inventories = inventoryServices.getAll();
+            reportService.createInventoryReport();
             return  new ResponseEntity<>(inventories,HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>("Retrieving inventories failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
