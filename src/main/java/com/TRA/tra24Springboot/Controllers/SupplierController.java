@@ -3,6 +3,7 @@ package com.TRA.tra24Springboot.Controllers;
 import com.TRA.tra24Springboot.DTO.SupplierDTO;
 import com.TRA.tra24Springboot.Models.PaymentType;
 import com.TRA.tra24Springboot.Models.Supplier;
+import com.TRA.tra24Springboot.Services.SupplierReportService;
 import com.TRA.tra24Springboot.Services.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,8 @@ import java.util.List;
 public class SupplierController {
     @Autowired
     SupplierServices supplierServices;
-
-
+    @Autowired
+    SupplierReportService reportService;
     @PostMapping("add")
 
     public Supplier addSupplier(Supplier supplier) {
@@ -53,6 +54,7 @@ public class SupplierController {
     public ResponseEntity<?> getAll() {
         try {
             List<SupplierDTO> suppliers = supplierServices.getSuppliers();
+            reportService.createSupplierReport();
             return new ResponseEntity<>(suppliers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Retrieving suppliers failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
