@@ -4,9 +4,13 @@ import com.TRA.tra24Springboot.BO.InventoryReportObject;
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Utils.DateHelperUtils;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -18,6 +22,8 @@ import java.util.*;
 public class ReportService {
     @Autowired
     InventoryServices inventoryServices;
+    @Autowired
+    private JavaMailSender mailSender;
 
     public void createInventoryReport() throws Exception {
         List<InventoryDTO> inventoryDTOList = inventoryServices.getAll();
@@ -35,6 +41,9 @@ public class ReportService {
         String fileName = pathToSave + uuid + "_" + timeStamp + ".pdf";
         JasperExportManager.exportReportToPdfFile(jasperPrint, fileName);
         System.out.println("Report is printed: " + fileName);
+
+        // Send the report via email and Slack
+        sendReportByEmail(fileName);
     }
 
     public List<InventoryReportObject> convertInventoryListToInventoryReportBO(List<InventoryDTO> dtos) {
@@ -55,5 +64,20 @@ public class ReportService {
             }
         }
         return inventoryReportObjectList;
+    }
+
+    private void sendReportByEmail(String filePath) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo("b.k.malshuraqia@gmail.com"); // Change to your email
+        helper.setSubject("Hourly Inventory Report");
+        helper.setText("Attached is the latest inventory report.");
+
+        File reportFile = new File(filePath);
+        helper.addAttachment(reportFile.getName(), reportFile);
+
+        mailSender.send(message);
+        System.out.println("Email sent successfully with attachment: " + reportFile.getName());
     }
 }
