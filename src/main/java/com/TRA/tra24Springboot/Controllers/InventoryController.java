@@ -1,10 +1,12 @@
 package com.TRA.tra24Springboot.Controllers;
 
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
+import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Models.Inventory;
 import com.TRA.tra24Springboot.Models.Product;
 import com.TRA.tra24Springboot.Services.InventoryServices;
 import com.TRA.tra24Springboot.Services.ReportService;
+import com.TRA.tra24Springboot.Services.SlackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ public class InventoryController {
     InventoryServices inventoryServices;
     @Autowired
     ReportService reportService;
+    @Autowired
+    SlackService slackService;
 
     @PostMapping("receive")
 
@@ -91,16 +95,41 @@ public class InventoryController {
     }
 
     @GetMapping("getAll")
-
-    public ResponseEntity<?>getInventories(){
+    public ResponseEntity<?> getInventories() {
         try {
             List<InventoryDTO> inventories = inventoryServices.getAll();
+            StringBuilder message = new StringBuilder();
+            // Start the message with a header
+            message.append("*Inventory Report* :memo:\n");
+            // Iterate over each inventory and format the message
+            for (InventoryDTO inventory : inventories) {
+                message.append("\n---------------------\n");
+                message.append("*Inventory ID:* ").append(inventory.getInventoryId()).append("\n");
+                message.append("*Location:* ").append(inventory.getLocation()).append("\n");
+                message.append("*Products:*\n");
+
+                // Iterate over each product in the inventory
+                for (ProductDTO product : inventory.getProducts()) {
+                    if (product.getProductDetailsDTO() != null) {
+                        message.append("  - *Product Name:* ")
+                                .append(product.getProductDetailsDTO().getProductName()).append("\n");
+
+                    }
+                }
+                // Send the formatted message to Slack
+                slackService.sendMessage("balqees", message.toString());
+
+                // Clear the message buffer for the next inventory
+                message.setLength(0);
+            }
+            // Generate the inventory report
             reportService.createInventoryReport();
-            return  new ResponseEntity<>(inventories,HttpStatus.OK);
-        }catch (Exception e) {
+
+            // Return the response with the inventories
+            return new ResponseEntity<>(inventories, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>("Retrieving inventories failed! " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping("getById")
