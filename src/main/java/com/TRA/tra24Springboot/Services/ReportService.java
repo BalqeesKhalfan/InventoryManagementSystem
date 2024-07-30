@@ -4,11 +4,16 @@ import com.TRA.tra24Springboot.BO.InventoryReportObject;
 import com.TRA.tra24Springboot.DTO.InventoryDTO;
 import com.TRA.tra24Springboot.DTO.ProductDTO;
 import com.TRA.tra24Springboot.Utils.DateHelperUtils;
+import com.slack.api.Slack;
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.methods.request.files.FilesUploadRequest;
+import com.slack.api.methods.response.files.FilesUploadResponse;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,6 +21,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -24,6 +30,7 @@ public class ReportService {
     InventoryServices inventoryServices;
     @Autowired
     private JavaMailSender mailSender;
+
 
     public void createInventoryReport() throws Exception {
         List<InventoryDTO> inventoryDTOList = inventoryServices.getAll();
@@ -44,6 +51,8 @@ public class ReportService {
 
         // Send the report via email and Slack
         sendReportByEmail(fileName);
+
+       //sendReportToSlack("#balqees","Report file was Attatched ",fileName);
     }
 
     public List<InventoryReportObject> convertInventoryListToInventoryReportBO(List<InventoryDTO> dtos) {
@@ -80,4 +89,6 @@ public class ReportService {
         mailSender.send(message);
         System.out.println("Email sent successfully with attachment: " + reportFile.getName());
     }
+
+
 }
